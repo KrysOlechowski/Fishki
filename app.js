@@ -4,10 +4,10 @@ const app = express()
 
 const Blog = require('./models/blog')
 
-
 // const dbUri = require('../secret.js')
-const dbUri = "mongodb+srv://nodeuser:node123@cluster0.quzdq.mongodb.net/node?retryWrites=true&w=majority"
+const dbUri = process.env.DBUri
 const PORT = process.env.PORT || 3003
+
 
 mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true })
    .then(() => {
