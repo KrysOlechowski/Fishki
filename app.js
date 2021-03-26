@@ -57,15 +57,15 @@ app.get('/blogs', (req, res) => {
    })
 })
 
-// app.get('/single', (req, res) => {
-//    const id = "605a54e267ae914f2cdab9b6"
-//    Blog.findById(id).then((result) => {
-//       res.send(result)
-//       console.log(result)
-//    }).catch((err) => {
-//       console.log(err)
-//    })
-// })
+app.get('/single', (req, res) => {
+   const id = "605a54e267ae914f2cdab9b6"
+   Blog.findById(id).then((result) => {
+      res.send(result)
+      console.log(result)
+   }).catch((err) => {
+      console.log(err)
+   })
+})
 
 // app.get('/', (req, res) => {
 //    res.send('<p>LOL</p>')
