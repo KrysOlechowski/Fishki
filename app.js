@@ -1,15 +1,15 @@
 const express = require("express")
 const mongoose = require('mongoose')
 const app = express()
-
+require("dotenv").config();
 const Blog = require('./models/blog')
 
 // const dbUri = require('../secret.js')
-const dbUri = process.env.DBUri
+const DBUri = process.env.DBUri
 const PORT = process.env.PORT || 3003
 
 
-mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(DBUri, { useNewUrlParser: true, useUnifiedTopology: true })
    .then(() => {
       console.log("Connected to DB")
       app.listen(PORT, () => {
