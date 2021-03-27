@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/fishki/static/css/main.9d5b29c0.chunk.css",
+    "main.js": "/fishki/static/js/main.2287e67a.chunk.js",
+    "main.js.map": "/fishki/static/js/main.2287e67a.chunk.js.map",
+    "runtime-main.js": "/fishki/static/js/runtime-main.f1096eda.js",
+    "runtime-main.js.map": "/fishki/static/js/runtime-main.f1096eda.js.map",
+    "static/js/2.40d25227.chunk.js": "/fishki/static/js/2.40d25227.chunk.js",
+    "static/js/2.40d25227.chunk.js.map": "/fishki/static/js/2.40d25227.chunk.js.map",
+    "static/js/3.2f4551a3.chunk.js": "/fishki/static/js/3.2f4551a3.chunk.js",
+    "static/js/3.2f4551a3.chunk.js.map": "/fishki/static/js/3.2f4551a3.chunk.js.map",
+    "index.html": "/fishki/index.html",
+    "static/css/main.9d5b29c0.chunk.css.map": "/fishki/static/css/main.9d5b29c0.chunk.css.map",
+    "static/js/2.40d25227.chunk.js.LICENSE.txt": "/fishki/static/js/2.40d25227.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f1096eda.js",
+    "static/js/2.40d25227.chunk.js",
+    "static/css/main.9d5b29c0.chunk.css",
+    "static/js/main.2287e67a.chunk.js"
+  ]
+}
