@@ -1,25 +1,35 @@
-import React, { useEffect } from 'react';
-import ky from 'ky'
+import React, { useEffect, useState } from 'react';
 
 
-import { getApiUrl } from '../../utils/api'
+
+import { Card } from '../../types'
+import { getAllCards } from '../../utils';
 interface MainProps {
 }
 
-const API_URL = getApiUrl()
 
 export const Main = (props: MainProps) => {
-
+   const [cards, setCards] = useState<Array<Card> | null>(null)
+   const [hasError, setError] = useState(false)
 
    useEffect(() => {
-      console.log(API_URL)
-      ky.get(`${API_URL}/blogs`).json().then((response) => {
-         console.log(response)
-      })
+      getAllCards().then(cards => {
+         setCards(cards)
+         console.log(cards)
+
+      }).catch(() => setError(true))
    }, [])
+
    return (
-      <div>
-         <h1>test2</h1>
-      </div>
-   );
+      <>
+         <h1>Cards :</h1>
+         {cards && cards.map(card => {
+            return <p>{card.title}</p>
+         })}
+         {hasError && (
+            <h1>Error while loading the cards</h1>
+         )}
+      </>
+   )
+
 };

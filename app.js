@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require('mongoose')
 const app = express()
 require("dotenv").config();
-const Blog = require('./models/blog')
+const Card = require('./models/card')
 
 const DBUri = process.env.DBUri
 const PORT = process.env.PORT || 3003
@@ -22,14 +22,25 @@ app.all('/*', function (req, res, next) {
    next();
 });
 
+app.get('/cards', (req, res) => {
+   console.log("REQUEST! cards")
+   Card.find().then((result) => {
+      res.send(result)
+   }).catch((err) => {
+      console.log(err)
+   })
+})
+
+
 app.get('/add', (req, res) => {
-   const blog = new Blog({
-      title: "new blog",
-      snippet: "about new blog"
-      , body: "body about blog"
+   const card = new Card({
+      title: "card title 2",
+      front: "card front 2",
+      back: "card front 2",
+      status: "card status 2"
    })
 
-   blog.save()
+   card.save()
       .then((result) => {
          console.log("CREATED!")
          res.send(result)
@@ -38,25 +49,9 @@ app.get('/add', (req, res) => {
       })
 })
 
-app.get('/', (req, res) => {
-   console.log("REQUEST! Main")
-   Blog.find().then((result) => {
-      res.send(result)
-   }).catch((err) => {
-      console.log(err)
-   })
-})
 
-app.get('/blogs', (req, res) => {
-   console.log("REQUEST! Blogs")
-   Blog.find().then((result) => {
-      res.send(result)
-   }).catch((err) => {
-      console.log(err)
-   })
-})
 
-app.get('/single', (req, res) => {
+app.get('/findById', (req, res) => {
    const id = "605a54e267ae914f2cdab9b6"
    Blog.findById(id).then((result) => {
       res.send(result)

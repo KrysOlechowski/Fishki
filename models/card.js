@@ -1,23 +1,28 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const blogSchema = new Schema({
+const cardSchema = new Schema({
    title: {
       type: String,
       required: true
    },
-   snippet: {
+   front: {
       type: String,
       required: true
    },
-   body: {
+   back: {
+      type: String,
+      required: true
+   },
+   status: {
       type: String,
       required: true
    }
 
+
 }, { timestamps: true });
 
 // it will automatically search for blogs(plural) collection:
-const Blog = mongoose.model('Blog', blogSchema)
+const Card = mongoose.model('Card', cardSchema)
 
-module.exports = Blog
+module.exports = Card
