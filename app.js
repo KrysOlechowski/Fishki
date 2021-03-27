@@ -4,7 +4,6 @@ const app = express()
 require("dotenv").config();
 const Blog = require('./models/blog')
 
-// const dbUri = require('../secret.js')
 const DBUri = process.env.DBUri
 const PORT = process.env.PORT || 3003
 
@@ -22,22 +21,22 @@ app.all('/*', function (req, res, next) {
    res.header("Access-Control-Allow-Headers", "X-Requested-With");
    next();
 });
-//heroku xgf
 
-// app.get('/add', (req, res) => {
-//    const blog = new Blog({
-//       title: "new blog",
-//       snippet: "about new blog"
-//       , body: "body about blog"
-//    })
+app.get('/add', (req, res) => {
+   const blog = new Blog({
+      title: "new blog",
+      snippet: "about new blog"
+      , body: "body about blog"
+   })
 
-//    blog.save()
-//       .then((result) => {
-//          res.send(result)
-//       }).catch((err) => {
-//          console.log(err)
-//       })
-// })
+   blog.save()
+      .then((result) => {
+         console.log("CREATED!")
+         res.send(result)
+      }).catch((err) => {
+         console.log(err)
+      })
+})
 
 app.get('/', (req, res) => {
    console.log("REQUEST! Main")
