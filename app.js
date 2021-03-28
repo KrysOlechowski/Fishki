@@ -7,6 +7,9 @@ const Card = require('./models/card')
 const DBUri = process.env.DBUri
 const PORT = process.env.PORT || 3003
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
 
 mongoose.connect(DBUri, { useNewUrlParser: true, useUnifiedTopology: true })
    .then(() => {
@@ -17,8 +20,10 @@ mongoose.connect(DBUri, { useNewUrlParser: true, useUnifiedTopology: true })
    }).catch((err) => console.log(err))
 
 app.all('/*', function (req, res, next) {
-   res.header("Access-Control-Allow-Origin", "*");
-   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+   res.setHeader("Access-Control-Allow-Origin", "*");
+   res.setHeader("Access-Control-Allow-Credentials", "true");
+   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+   res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
    next();
 });
 
@@ -32,23 +37,23 @@ app.get('/cards', (req, res) => {
 })
 
 
-app.get('/add', (req, res) => {
+app.post('/add', (req, res) => {
+   const body = req.body
+
    const card = new Card({
-      title: "card title 2",
-      front: "card front 2",
-      back: "card front 2",
-      status: "card status 2"
+      title: body.title,
+      front: body.front,
+      back: body.back,
+      status: body.status
    })
 
    card.save()
       .then((result) => {
-         console.log("CREATED!")
          res.send(result)
       }).catch((err) => {
          console.log(err)
       })
 })
-
 
 
 app.get('/findById', (req, res) => {
@@ -61,10 +66,3 @@ app.get('/findById', (req, res) => {
    })
 })
 
-// app.get('/', (req, res) => {
-//    res.send('<p>LOL</p>')
-// })
-
-// app.get('/about', (req, res) => {
-//    res.send('<p>about</p>')
-// })
