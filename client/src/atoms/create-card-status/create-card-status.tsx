@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { CreatedStatus } from '../../types';
+import { CardCreateStatus } from '../../types';
 
 
 interface Props {
-   status?: CreatedStatus;
+   status?: CardCreateStatus;
 }
 
 
@@ -11,19 +11,19 @@ interface Props {
 export const CreateCardStatus: FC<Props> = ({ status }) => {
 
 
-   if (status === CreatedStatus.NEW) {
+   if (status === CardCreateStatus.NEW) {
       return (
          <>
             <h3>Create card</h3>
          </>
       )
-   } else if (status === CreatedStatus.CREATED) {
+   } else if (status === CardCreateStatus.CREATED) {
       return (
          <>
             <h3>Card Created</h3>
          </>
       )
-   } else if (status === CreatedStatus.FAILED) {
+   } else if (status === CardCreateStatus.FAILED) {
       return (
          <>
             <h3>Creatind card failed</h3>

@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from 'react';
 import styled from 'styled-components'
-import { CreateCardStatus } from '../../organisms/create-card-status';
-import { CreatedStatus } from '../../types';
+import { CreateCardStatus } from '../../atoms/create-card-status';
+import { CardCreateStatus } from '../../types';
 
 import { createCard } from '../../utils/api'
 
@@ -16,7 +16,7 @@ export const CreateCard: FC<Props> = () => {
    const [cardBack, setCardBack] = useState("")
    const [cardStatus, setCardStatus] = useState("")
    const [emptyFieldError, setEmptyFieldError] = useState(false)
-   const [createdStatus, setCreatedStatus] = useState(CreatedStatus.NEW)
+   const [cardCreateStatus, setCardCreateStatus] = useState(CardCreateStatus.NEW)
 
    const onSubmit: any = useCallback(
       (e: any) => {
@@ -31,16 +31,16 @@ export const CreateCard: FC<Props> = () => {
                back: cardBack,
                status: cardStatus
             }
-            setCreatedStatus(CreatedStatus.PENDING)
+            setCardCreateStatus(CardCreateStatus.PENDING)
             createCard(payload).then(() => {
-               setCreatedStatus(CreatedStatus.CREATED)
+               setCardCreateStatus(CardCreateStatus.CREATED)
                setCardTitle("")
                setCardFront("")
                setCardBack("")
                setCardStatus("")
 
             }).catch((err) => {
-               setCreatedStatus(CreatedStatus.FAILED)
+               setCardCreateStatus(CardCreateStatus.FAILED)
                console.log(err)
             })
          }
@@ -70,7 +70,7 @@ export const CreateCard: FC<Props> = () => {
 
          <CreateCardWrapper>
             <h1>Create card</h1>
-            <form action="submit" onSubmit={onSubmit} >
+            <form action="submit" onSubmit={onSubmit} autoComplete="off">
                <div className="">
                   <input type="text" placeholder="Title" onChange={onChange} value={cardTitle} name="title" />
                </div>
@@ -87,7 +87,7 @@ export const CreateCard: FC<Props> = () => {
                <div className="">
                   <button type="submit">Submit</button>
                </div>
-               <CreateCardStatus status={createdStatus} />
+               <CreateCardStatus status={cardCreateStatus} />
                {emptyFieldError && (
                   <div className="">
                      <p>You need to fill all the required forms</p>

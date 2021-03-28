@@ -1,14 +1,22 @@
 import ky from "ky";
-import { Card } from "../types";
+import { CardCreate, Card } from "../types";
 
 export const getAllCards = (): Promise<Array<Card>> => {
   const API_URL = getApiUrl();
   return ky.get(`${API_URL}/cards`).json();
 };
 
-export const createCard = (payload: Card): Promise<any> => {
+export const createCard = (payload: CardCreate): Promise<unknown> => {
   const API_URL = getApiUrl();
   return ky.post(`${API_URL}/add`, { json: payload });
+};
+
+export const deleteCard = (id: string): Promise<any> => {
+  const API_URL = getApiUrl();
+  const payload = {
+    cardId: id,
+  };
+  return ky.delete(`${API_URL}/delete`, { json: payload }).json();
 };
 
 export const getApiUrl = (): string => {

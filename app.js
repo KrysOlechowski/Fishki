@@ -6,7 +6,9 @@ const Card = require('./models/card')
 
 const DBUri = process.env.DBUri
 const PORT = process.env.PORT || 3003
+const cors = require('cors')
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
@@ -19,13 +21,6 @@ mongoose.connect(DBUri, { useNewUrlParser: true, useUnifiedTopology: true })
       })
    }).catch((err) => console.log(err))
 
-app.all('/*', function (req, res, next) {
-   res.setHeader("Access-Control-Allow-Origin", "*");
-   res.setHeader("Access-Control-Allow-Credentials", "true");
-   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-   res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-   next();
-});
 
 app.get('/cards', (req, res) => {
    console.log("REQUEST! cards")
@@ -55,6 +50,13 @@ app.post('/add', (req, res) => {
       })
 })
 
+
+app.delete('/delete', (req, res) => {
+   const body = req.body
+   Card.deleteOne({ _id: body.cardId }).then((result) => {
+      res.send(result)
+   })
+})
 
 app.get('/findById', (req, res) => {
    const id = "605a54e267ae914f2cdab9b6"
