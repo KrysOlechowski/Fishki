@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components'
 
 import { CreateCard } from '../create-card'
-import { getAllCards } from '../../utils';
+import { createNewCollection, getAllCards, getCollectionsNames } from '../../utils';
 
 import { Card } from '../../types'
 import { CardComponent } from '../../organisms/card'
@@ -19,12 +19,33 @@ export const Main: FC<MainProps> = () => {
          console.log(cards)
          setCards(cards)
       }).catch(() => setError(true))
+      getCollectionsNames().then(collection => {
+         console.log(collection)
+      }).catch(() => setError(true))
+
    }, [])
+
+   const onCreateCollection = useCallback(
+      (e) => {
+         e.preventDefault()
+         createNewCollection("lolo").then((result) => {
+            console.log(result)
+         })
+      },
+      [],
+   )
 
    return (
       <MainWrapper>
          <MenuWrapper>
             <CreateCard />
+            <div>
+               <form onSubmit={onCreateCollection}>
+                  Create collection:
+               <button >Create Colection</button>
+               </form>
+
+            </div>
          </MenuWrapper>
 
          <CardsWrapper>

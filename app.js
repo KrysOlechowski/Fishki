@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const app = express()
 require("dotenv").config();
 const Card = require('./models/card')
+const CollectionsNames = require('./models/collections')
 
 const DBUri = process.env.DBUri
 const PORT = process.env.PORT || 3003
@@ -11,7 +12,6 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-
 
 mongoose.connect(DBUri, { useNewUrlParser: true, useUnifiedTopology: true })
    .then(() => {
@@ -23,11 +23,31 @@ mongoose.connect(DBUri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 
 app.get('/cards', (req, res) => {
-   console.log("REQUEST! cards")
    Card.find().then((result) => {
       res.send(result)
    }).catch((err) => {
       console.log(err)
+   })
+})
+
+app.get('/collections', (req, res) => {
+   CollectionsNames.find().then((result) => {
+      res.send(result)
+   }).catch((err) => {
+      console.log(err)
+   })
+})
+
+app.post('/collections', (req, res) => {
+   const collectionName = req.body.name
+   CollectionsNames.find().then((result) => {
+      console.log(result)
+      const collection = new CollectionsNames({
+         names: [
+            { collectionName: "trl" }
+         ]
+      })
+      collection.save()
    })
 })
 
@@ -57,6 +77,20 @@ app.delete('/delete', (req, res) => {
       res.send(result)
    })
 })
+
+app.post('/update', (req, res) => {
+   const body = req.body
+   Card.updateOne({ _id: body.id },
+      {
+         ...body
+      }).then((result) => {
+         res.send(result)
+      }).catch(err => {
+         res.send(err)
+      })
+
+})
+
 
 app.get('/findById', (req, res) => {
    const id = "605a54e267ae914f2cdab9b6"

@@ -1,5 +1,5 @@
 import ky from "ky";
-import { CardCreate, Card } from "../types";
+import { CardCreate, CardUpdate, Card } from "../types";
 
 export const getAllCards = (): Promise<Array<Card>> => {
   const API_URL = getApiUrl();
@@ -17,6 +17,25 @@ export const deleteCard = (id: string): Promise<any> => {
     cardId: id,
   };
   return ky.delete(`${API_URL}/delete`, { json: payload }).json();
+};
+
+export const updateCard = (updatedFields: CardUpdate): Promise<any> => {
+  const API_URL = getApiUrl();
+  const payload = updatedFields;
+  return ky.post(`${API_URL}/update`, { json: payload }).json();
+};
+
+export const getCollectionsNames = (): Promise<Array<Card>> => {
+  const API_URL = getApiUrl();
+  return ky.get(`${API_URL}/collections`).json();
+};
+
+export const createNewCollection = (name: string): Promise<Array<Card>> => {
+  const API_URL = getApiUrl();
+  const payload = {
+    name: name,
+  };
+  return ky.post(`${API_URL}/collections`, { json: payload }).json();
 };
 
 export const getApiUrl = (): string => {

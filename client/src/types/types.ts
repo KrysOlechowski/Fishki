@@ -11,3 +11,12 @@ export interface CardCreate {
   status: string;
   collection?: string;
 }
+
+export interface CardUpdate {
+  id: string;
+  title: string;
+  front: string;
+  back: string;
+  status: string;
+  collection?: string;
+}

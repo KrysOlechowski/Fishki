@@ -11,3 +11,10 @@ export enum CardDeleteStatus {
   FAILED = "FAILED",
   PENDING = "PENDING",
 }
+
+export enum CardUpdateStatus {
+  NONE = "NONE",
+  PENDING = "PENDING",
+  FAILED = "FAILED",
+  UPDATED = "UPDATED",
+}
