@@ -40,16 +40,22 @@ app.get('/collections', (req, res) => {
 
 app.post('/collections', (req, res) => {
    const collectionName = req.body.name
-   CollectionsNames.find().then((result) => {
-      console.log(result)
-      const collection = new CollectionsNames({
-         names: [
-            { collectionName: "trl" }
-         ]
-      })
-      collection.save()
+   console.log("collectionName : " + collectionName)
+   CollectionsNames.findOne({ _id: "606b0dd9c718f4532491e229" }, (err, coll) => {
+      coll.names = [
+         "kol1", "kol2", "kol3"
+      ]
+
+
+      coll.save()
+   }).then((result) => {
+      res.send(result)
+   }).catch((err) => {
+      console.log(err)
    })
+
 })
+
 
 
 app.post('/add', (req, res) => {

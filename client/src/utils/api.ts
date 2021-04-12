@@ -25,6 +25,19 @@ export const updateCard = (updatedFields: CardUpdate): Promise<any> => {
   return ky.post(`${API_URL}/update`, { json: payload }).json();
 };
 
+export const getCollectionsNamesAndCards = async () => {
+  const API_URL = getApiUrl();
+
+  try {
+    const collectionsNames = await ky.get(`${API_URL}/collections`).json();
+    const cards = await ky.get(`${API_URL}/cards`).json();
+    console.log(collectionsNames);
+    console.log(cards);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getCollectionsNames = (): Promise<Array<Card>> => {
   const API_URL = getApiUrl();
   return ky.get(`${API_URL}/collections`).json();

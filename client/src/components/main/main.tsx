@@ -1,8 +1,9 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components'
 
 import { CreateCard } from '../create-card'
-import { createNewCollection, getAllCards, getCollectionsNames } from '../../utils';
+import { CreateCollection } from '../create-collection'
+import { getAllCards, getCollectionsNames, getCollectionsNamesAndCards } from '../../utils';
 
 import { Card } from '../../types'
 import { CardComponent } from '../../organisms/card'
@@ -14,6 +15,7 @@ export const Main: FC<MainProps> = () => {
    const [cards, setCards] = useState<Array<Card> | null>(null)
    const [hasError, setError] = useState(false)
 
+
    useEffect(() => {
       getAllCards().then(cards => {
          console.log(cards)
@@ -22,30 +24,16 @@ export const Main: FC<MainProps> = () => {
       getCollectionsNames().then(collection => {
          console.log(collection)
       }).catch(() => setError(true))
-
+      getCollectionsNamesAndCards()
    }, [])
 
-   const onCreateCollection = useCallback(
-      (e) => {
-         e.preventDefault()
-         createNewCollection("lolo").then((result) => {
-            console.log(result)
-         })
-      },
-      [],
-   )
+
 
    return (
       <MainWrapper>
          <MenuWrapper>
             <CreateCard />
-            <div>
-               <form onSubmit={onCreateCollection}>
-                  Create collection:
-               <button >Create Colection</button>
-               </form>
 
-            </div>
          </MenuWrapper>
 
          <CardsWrapper>
@@ -57,6 +45,7 @@ export const Main: FC<MainProps> = () => {
          {hasError && (
             <h1>Error while loading the cards</h1>
          )}
+         <CreateCollection />
       </MainWrapper>
    )
 };
