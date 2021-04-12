@@ -1,10 +1,12 @@
 import React, { FC, useCallback, useMemo, useState } from 'react';
-import styled from 'styled-components'
+import styled from "styled-components/macro";
 import clsx from 'clsx'
 
 
-import { Card, CardDeleteStatus, CardUpdateStatus } from '../../types';
-import { deleteCard, updateCard } from '../../utils';
+import { Card, CardDeleteStatus } from '../../types';
+import { deleteCard } from '../../utils';
+
+import { EditCard } from '../edit-card'
 
 interface Props {
    card: Card;
@@ -15,7 +17,6 @@ export const CardComponent: FC<Props> = ({ card }) => {
    const { title, front, back, status, _id: id } = card
 
    const [cardDeleteStatus, setCardDeletestatus] = useState(CardDeleteStatus.NONE)
-   const [cardUpdateStatus, setCardUpdateStatus] = useState(CardUpdateStatus.NONE)
 
    const onDeleteCard = useCallback(
       () => {
@@ -34,27 +35,6 @@ export const CardComponent: FC<Props> = ({ card }) => {
       [id],
    )
 
-   const onUpdateCard = useCallback(
-      () => {
-         setCardUpdateStatus(CardUpdateStatus.PENDING)
-         const updatedFields = {
-            id: id,
-            title: "rrr title",
-            front: "updated front",
-            back: "updated back",
-            status: "updated status"
-         }
-         updateCard(updatedFields).then(res => {
-            if (res.ok) {
-               setCardUpdateStatus(CardUpdateStatus.UPDATED)
-            }
-         }).catch((err) => {
-            console.log(err)
-            setCardUpdateStatus(CardUpdateStatus.FAILED)
-         })
-      },
-      [id],
-   )
 
    const cardStatusText = useMemo(() => {
       if (cardDeleteStatus === CardDeleteStatus.NONE) {
@@ -71,31 +51,17 @@ export const CardComponent: FC<Props> = ({ card }) => {
       }
    }, [cardDeleteStatus])
 
-   const cardUpdateText = useMemo(() => {
-      if (cardUpdateStatus === CardUpdateStatus.NONE) {
-         return "Update Card"
-      }
-      else if (cardUpdateStatus === CardUpdateStatus.PENDING) {
-         return "Updating Card"
-      } else if (cardUpdateStatus === CardUpdateStatus.FAILED) {
-         return "Updating Card Failed"
-      } else if (cardUpdateStatus === CardUpdateStatus.UPDATED) {
-         return "Card Updated"
-      } else {
-         return ""
-      }
-   }, [cardUpdateStatus])
 
 
    return (
       <CardWrapper className={clsx("test2", { deleted: cardDeleteStatus === CardDeleteStatus.DELETED })} size="14">
+         <EditCard card={card} />
          <h2>title: {title}</h2>
          <h3>front: {front}</h3>
          <h3>back: {back}</h3>
          <h3>status: {status}</h3>
          <h3>id: {id}</h3>
          <button onClick={onDeleteCard}>{cardStatusText}</button>
-         <button onClick={onUpdateCard}>{cardUpdateText}</button>
       </CardWrapper >
    )
 };
@@ -105,6 +71,8 @@ interface CardWrapperProps {
    size: string;
 }
 const CardWrapper = styled.div<CardWrapperProps>`
+position:relative;
+
  &.test2{
    border:1px solid green;
 }
