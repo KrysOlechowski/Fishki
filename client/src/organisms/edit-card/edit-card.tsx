@@ -2,9 +2,10 @@ import clsx from 'clsx';
 import { FC, useCallback, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 
-import { ReactComponent as EditIcon } from '../../assets/icons/edit.svg'
+import { EditIcon } from '../../assets/icons'
 import { Card, CardUpdateStatus } from '../../types';
 import { updateCard } from '../../utils';
+import { Dropdown } from '../../molecules/dropdown'
 
 interface Props {
    card: Card;
@@ -18,7 +19,9 @@ export const EditCard: FC<Props> = ({ card }) => {
    const [cardUpdateStatus, setCardUpdateStatus] = useState(CardUpdateStatus.NONE)
    const [formFront, setFormFront] = useState(front)
    const [formBack, setFormBack] = useState(back)
-
+   const dropdownOptions = [
+      { label: "angielski" }, { label: "test" }
+   ]
 
    const onClick = useCallback(
       () => {
@@ -86,6 +89,7 @@ export const EditCard: FC<Props> = ({ card }) => {
          <input name="back" value={formBack} onChange={onInputChange}></input>
          <h3>status: {status}</h3>
          <h3>id: {id}</h3>
+         <Dropdown options={dropdownOptions} />
          <button onClick={onUpdateCard}>{cardUpdateText}</button>
       </Wrapper>
    )
