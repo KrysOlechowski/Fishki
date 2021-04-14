@@ -62,10 +62,10 @@ app.post('/add', (req, res) => {
    const body = req.body
 
    const card = new Card({
-      title: body.title,
       front: body.front,
       back: body.back,
-      status: body.status
+      status: body.status,
+      collectionName: body.collectionName
    })
 
    card.save()

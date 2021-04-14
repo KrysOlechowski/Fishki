@@ -1,9 +1,12 @@
 import React, { FC, useCallback, useState } from 'react';
 import styled from 'styled-components'
 import { CreateCardStatus } from '../../atoms/create-card-status';
-import { CardCreateStatus } from '../../types';
+import { CardCreateStatus, CardStatus } from '../../types';
 
 import { createCard } from '../../utils/api'
+
+
+import '../../theme/variables.scss'
 
 interface Props {
 }
@@ -11,7 +14,6 @@ interface Props {
 
 
 export const CreateCard: FC<Props> = () => {
-   const [cardTitle, setCardTitle] = useState("")
    const [cardFront, setCardFront] = useState("")
    const [cardBack, setCardBack] = useState("")
    const [cardStatus, setCardStatus] = useState("")
@@ -21,20 +23,19 @@ export const CreateCard: FC<Props> = () => {
    const onSubmit: any = useCallback(
       (e: any) => {
          e.preventDefault()
-         if (!cardTitle || !cardFront || !cardBack || !cardStatus) {
+         if (!cardFront || !cardBack || !cardStatus) {
             setEmptyFieldError(true)
          } else {
             setEmptyFieldError(false)
             const payload = {
-               title: cardTitle,
                front: cardFront,
                back: cardBack,
-               status: cardStatus
+               status: cardStatus,
+               collectionName: CardStatus.new
             }
             setCardCreateStatus(CardCreateStatus.PENDING)
             createCard(payload).then(() => {
                setCardCreateStatus(CardCreateStatus.CREATED)
-               setCardTitle("")
                setCardFront("")
                setCardBack("")
                setCardStatus("")
@@ -45,16 +46,14 @@ export const CreateCard: FC<Props> = () => {
             })
          }
       },
-      [cardTitle, cardFront, cardBack, cardStatus]
+      [cardFront, cardBack, cardStatus]
    )
 
    const onChange = useCallback(
       (e: any) => {
          const name = e.target.name
          const value = e.target.value
-         if (name === "title") {
-            setCardTitle(value)
-         } else if (name === "front") {
+         if (name === "front") {
             setCardFront(value)
          } else if (name === "back") {
             setCardBack(value)
@@ -71,9 +70,7 @@ export const CreateCard: FC<Props> = () => {
          <CreateCardWrapper>
             <h1>Create card</h1>
             <form action="submit" onSubmit={onSubmit} autoComplete="off">
-               <div className="">
-                  <input type="text" placeholder="Title" onChange={onChange} value={cardTitle} name="title" />
-               </div>
+
                <div className="">
                   <input type="text" placeholder="Front" onChange={onChange} value={cardFront} name="front" />
                </div>
@@ -102,5 +99,7 @@ export const CreateCard: FC<Props> = () => {
 const CreateCardWrapper = styled.div`
 width:350px;
 padding:50px;
-border:1px solid red;
+border:1px solid white;
+background-color:var(--mine-shaft);
+color:white;
 `

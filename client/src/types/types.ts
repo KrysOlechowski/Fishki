@@ -5,7 +5,6 @@ export interface Card extends CardCreate {
 }
 
 export interface CardCreate {
-  title: string;
   front: string;
   back: string;
   status: string;
@@ -14,9 +13,14 @@ export interface CardCreate {
 
 export interface CardUpdate {
   id: string;
-  title: string;
   front: string;
   back: string;
-  status: string;
+  status: CardStatus;
   collection?: string;
+}
+
+export enum CardStatus {
+  new = "new",
+  good = "good",
+  bad = "bad",
 }

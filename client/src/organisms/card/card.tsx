@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 import clsx from 'clsx'
+import '../../theme/variables.scss'
 
 
 import { Card, CardDeleteStatus } from '../../types';
@@ -14,7 +15,7 @@ interface Props {
 
 
 export const CardComponent: FC<Props> = ({ card }) => {
-   const { title, front, back, status, _id: id } = card
+   const { front, back, status, _id: id } = card
 
    const [cardDeleteStatus, setCardDeletestatus] = useState(CardDeleteStatus.NONE)
 
@@ -56,7 +57,6 @@ export const CardComponent: FC<Props> = ({ card }) => {
    return (
       <CardWrapper className={clsx("test2", { deleted: cardDeleteStatus === CardDeleteStatus.DELETED })} size="14">
          <EditCard card={card} />
-         <h2>title: {title}</h2>
          <h3>front: {front}</h3>
          <h3>back: {back}</h3>
          <h3>status: {status}</h3>
@@ -72,12 +72,12 @@ interface CardWrapperProps {
 }
 const CardWrapper = styled.div<CardWrapperProps>`
 position:relative;
+border:1px solid white;
+background-color:var(--mine-shaft);
+color:white;
 
- &.test2{
-   border:1px solid green;
-}
 &.deleted{
-   background-color:pink;
+   background-color:#a63d40;
 }
 ${({ size }) =>
       size === "combined" &&

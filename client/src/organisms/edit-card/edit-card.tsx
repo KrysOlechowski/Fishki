@@ -3,7 +3,7 @@ import { FC, useCallback, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 
 import { EditIcon } from '../../assets/icons'
-import { Card, CardUpdateStatus } from '../../types';
+import { Card, CardUpdate, CardUpdateStatus, CardStatus } from '../../types';
 import { updateCard } from '../../utils';
 import { Dropdown } from '../../molecules/dropdown'
 
@@ -14,7 +14,7 @@ interface Props {
 
 
 export const EditCard: FC<Props> = ({ card }) => {
-   const { title, front, back, status, _id: id } = card
+   const { front, back, status, _id: id } = card
    const [isOnEditMode, setIsOnEditMode] = useState(false)
    const [cardUpdateStatus, setCardUpdateStatus] = useState(CardUpdateStatus.NONE)
    const [formFront, setFormFront] = useState(front)
@@ -33,12 +33,11 @@ export const EditCard: FC<Props> = ({ card }) => {
    const onUpdateCard = useCallback(
       () => {
          setCardUpdateStatus(CardUpdateStatus.PENDING)
-         const updatedFields = {
+         const updatedFields: CardUpdate = {
             id: id,
-            title: "rrr title",
             front: formFront,
             back: formBack,
-            status: "updated status"
+            status: CardStatus.good
          }
          updateCard(updatedFields).then(res => {
             if (res.ok) {
@@ -83,7 +82,6 @@ export const EditCard: FC<Props> = ({ card }) => {
    return (
       <Wrapper className={clsx("wrapper", { editMode: isOnEditMode })}>
          <EditIcon className="iconWrapper" onClick={onClick} />
-         <h2>title: {title}</h2>
 
          <input name="front" value={formFront} onChange={onInputChange}></input>
          <input name="back" value={formBack} onChange={onInputChange}></input>
@@ -97,11 +95,12 @@ export const EditCard: FC<Props> = ({ card }) => {
 
 const Wrapper = styled.div`
 
-   background-color:pink;
+   background-color:#f0c808;
    width:100%;
    height:100%;
    clip-path: circle(30px at 95% 10px);
   transition: clip-path 1s;
+  color:black;
 
 &.editMode{
    clip-path: circle(100%);

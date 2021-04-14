@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import styled from 'styled-components'
+import styled from "styled-components/macro"
 
 import { CreateCard } from '../create-card'
 import { CreateCollection } from '../create-collection'
@@ -7,6 +7,8 @@ import { getAllCards, getCollectionsNames, getCollectionsNamesAndCards } from '.
 
 import { Card } from '../../types'
 import { CardComponent } from '../../organisms/card'
+
+import '../../theme/variables.scss'
 interface MainProps {
 }
 
@@ -53,6 +55,8 @@ export const Main: FC<MainProps> = () => {
 const MainWrapper = styled.div`
 display:flex;
 flex-direction:column;
+height:100vh;
+background-color:var(--tundora);
 `
 
 const MenuWrapper = styled.div`
@@ -61,4 +65,5 @@ const MenuWrapper = styled.div`
 
 const CardsWrapper = styled.div`
 display:flex;
+
 `
