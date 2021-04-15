@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { CardCreateStatus } from '../../types';
+import { CardCreateStatus } from '../../../types';
 
 
 interface Props {

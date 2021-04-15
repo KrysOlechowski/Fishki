@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { createNewCollection } from '../../utils';
+import { createNewCollection } from '../../../utils';
 interface Props {
 }
 export const CreateCollection: FC<Props> = () => {

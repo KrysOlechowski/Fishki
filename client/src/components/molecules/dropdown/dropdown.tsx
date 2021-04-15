@@ -4,8 +4,8 @@ import { Button, Wrapper as DropdownWrapper, Menu, MenuItem } from 'react-aria-m
 
 import styled from "styled-components/macro";
 
-import '../../theme/variables.scss'
-import { ArrowDownIcon } from '../../assets/icons'
+import '../../../theme/variables.scss'
+import { ArrowDownIcon } from '../../../assets/icons'
 
 interface Props {
    options: { label: string }[]

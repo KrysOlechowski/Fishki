@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 import styled from "styled-components/macro"
 
-import { CreateCard } from '../create-card'
-import { CreateCollection } from '../create-collection'
-import { getAllCards, getCollectionsNames, getCollectionsNamesAndCards } from '../../utils';
+import { CreateCard } from '../../organisms/create-card'
+import { CreateCollection } from '../../organisms/create-collection'
+import { getAllCards, getCollectionsNames, getCollectionsNamesAndCards } from '../../../utils';
 
-import { Card } from '../../types'
+import { Card } from '../../../types'
 import { CardComponent } from '../../organisms/card'
 
-import '../../theme/variables.scss'
+import '../../../theme/variables.scss'
 interface MainProps {
 }
 

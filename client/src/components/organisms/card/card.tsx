@@ -1,14 +1,13 @@
 import React, { FC, useCallback, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 import clsx from 'clsx'
-import '../../theme/variables.scss'
+import '../../../theme/variables.scss'
 
 
-import { Card, CardDeleteStatus } from '../../types';
-import { deleteCard } from '../../utils';
+import { Card, CardDeleteStatus } from '../../../types';
+import { deleteCard } from '../../../utils';
 
 import { EditCard } from '../edit-card'
-
 interface Props {
    card: Card;
 }

@@ -2,9 +2,9 @@ import clsx from 'clsx';
 import { FC, useCallback, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 
-import { EditIcon } from '../../assets/icons'
-import { Card, CardUpdate, CardUpdateStatus, CardStatus } from '../../types';
-import { updateCard } from '../../utils';
+import { EditIcon } from '../../../assets/icons'
+import { Card, CardUpdate, CardUpdateStatus, CardStatus } from '../../../types';
+import { updateCard } from '../../../utils';
 import { Dropdown } from '../../molecules/dropdown'
 
 interface Props {

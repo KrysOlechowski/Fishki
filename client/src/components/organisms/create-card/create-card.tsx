@@ -1,12 +1,12 @@
 import React, { FC, useCallback, useState } from 'react';
 import styled from 'styled-components'
 import { CreateCardStatus } from '../../atoms/create-card-status';
-import { CardCreateStatus, CardStatus } from '../../types';
+import { CardCreateStatus, CardStatus } from '../../../types';
 
-import { createCard } from '../../utils/api'
+import { createCard } from '../../../utils/api'
 
 
-import '../../theme/variables.scss'
+import '../../../theme/variables.scss'
 
 interface Props {
 }
