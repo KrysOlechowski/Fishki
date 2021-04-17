@@ -7,8 +7,8 @@ export interface Card extends CardCreate {
 export interface CardCreate {
   front: string;
   back: string;
-  status: string;
-  collection?: string;
+  status: CardStatus;
+  collectionName: string;
 }
 
 export interface CardUpdate {
@@ -16,7 +16,7 @@ export interface CardUpdate {
   front: string;
   back: string;
   status: CardStatus;
-  collection?: string;
+  collectionName: string;
 }
 
 export enum CardStatus {

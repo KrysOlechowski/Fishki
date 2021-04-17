@@ -8,13 +8,14 @@ import { Card, CardDeleteStatus } from '../../../types';
 import { deleteCard } from '../../../utils';
 
 import { EditCard } from '../edit-card'
+import { CardAnswers } from '../../molecules/card-answers'
 interface Props {
    card: Card;
 }
 
 
 export const CardComponent: FC<Props> = ({ card }) => {
-   const { front, back, status, _id: id } = card
+   const { front, back, status, collectionName,_id: id } = card
 
    const [cardDeleteStatus, setCardDeletestatus] = useState(CardDeleteStatus.NONE)
 
@@ -59,8 +60,10 @@ export const CardComponent: FC<Props> = ({ card }) => {
          <h3>front: {front}</h3>
          <h3>back: {back}</h3>
          <h3>status: {status}</h3>
+         <h3>collection: {collectionName}</h3>
          <h3>id: {id}</h3>
          <button onClick={onDeleteCard}>{cardStatusText}</button>
+         <CardAnswers card={card} />
       </CardWrapper >
    )
 };

@@ -5,6 +5,7 @@ import styled from "styled-components/macro";
 import { EditIcon } from '../../../assets/icons'
 import { Card, CardUpdate, CardUpdateStatus, CardStatus } from '../../../types';
 import { updateCard } from '../../../utils';
+import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import { Dropdown } from '../../molecules/dropdown'
 
 interface Props {
@@ -19,9 +20,8 @@ export const EditCard: FC<Props> = ({ card }) => {
    const [cardUpdateStatus, setCardUpdateStatus] = useState(CardUpdateStatus.NONE)
    const [formFront, setFormFront] = useState(front)
    const [formBack, setFormBack] = useState(back)
-   const dropdownOptions = [
-      { label: "angielski" }, { label: "test" }
-   ]
+   const [cardCollection,setCardCollection]=useState("")
+   const dropdownOptions = COLLECTIONS_OPTIONS
 
    const onClick = useCallback(
       () => {
@@ -30,6 +30,10 @@ export const EditCard: FC<Props> = ({ card }) => {
       [isOnEditMode],
    )
 
+   const onDropdownSelect=useCallback((value)=>{
+      setCardCollection(value)
+   },[])
+
    const onUpdateCard = useCallback(
       () => {
          setCardUpdateStatus(CardUpdateStatus.PENDING)
@@ -37,7 +41,8 @@ export const EditCard: FC<Props> = ({ card }) => {
             id: id,
             front: formFront,
             back: formBack,
-            status: CardStatus.good
+            status: CardStatus.good,
+            collectionName:cardCollection
          }
          updateCard(updatedFields).then(res => {
             if (res.ok) {
@@ -48,7 +53,7 @@ export const EditCard: FC<Props> = ({ card }) => {
             setCardUpdateStatus(CardUpdateStatus.FAILED)
          })
       },
-      [id, formFront, formBack],
+      [id, formFront, formBack,cardCollection],
    )
 
 
@@ -87,7 +92,7 @@ export const EditCard: FC<Props> = ({ card }) => {
          <input name="back" value={formBack} onChange={onInputChange}></input>
          <h3>status: {status}</h3>
          <h3>id: {id}</h3>
-         <Dropdown options={dropdownOptions} />
+         <Dropdown onSelection={onDropdownSelect} options={dropdownOptions} />
          <button onClick={onUpdateCard}>{cardUpdateText}</button>
       </Wrapper>
    )

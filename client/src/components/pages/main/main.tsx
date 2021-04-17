@@ -55,7 +55,6 @@ export const Main: FC<MainProps> = () => {
 const MainWrapper = styled.div`
 display:flex;
 flex-direction:column;
-height:100vh;
 background-color:var(--tundora);
 `
 

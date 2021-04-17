@@ -4,7 +4,8 @@ import { CreateCardStatus } from '../../atoms/create-card-status';
 import { CardCreateStatus, CardStatus } from '../../../types';
 
 import { createCard } from '../../../utils/api'
-
+import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
+import {Dropdown}from '../../molecules/dropdown'
 
 import '../../../theme/variables.scss'
 
@@ -16,29 +17,30 @@ interface Props {
 export const CreateCard: FC<Props> = () => {
    const [cardFront, setCardFront] = useState("")
    const [cardBack, setCardBack] = useState("")
-   const [cardStatus, setCardStatus] = useState("")
    const [emptyFieldError, setEmptyFieldError] = useState(false)
    const [cardCreateStatus, setCardCreateStatus] = useState(CardCreateStatus.NEW)
+   const [cardCollection,setCardCollection]=useState("")
+
+   const dropdownOptions = COLLECTIONS_OPTIONS
 
    const onSubmit: any = useCallback(
       (e: any) => {
          e.preventDefault()
-         if (!cardFront || !cardBack || !cardStatus) {
+         if (!cardFront || !cardBack || !cardCollection) {
             setEmptyFieldError(true)
          } else {
             setEmptyFieldError(false)
             const payload = {
                front: cardFront,
                back: cardBack,
-               status: cardStatus,
-               collectionName: CardStatus.new
+               status: CardStatus.new,
+               collectionName: cardCollection
             }
             setCardCreateStatus(CardCreateStatus.PENDING)
             createCard(payload).then(() => {
                setCardCreateStatus(CardCreateStatus.CREATED)
                setCardFront("")
                setCardBack("")
-               setCardStatus("")
 
             }).catch((err) => {
                setCardCreateStatus(CardCreateStatus.FAILED)
@@ -46,7 +48,7 @@ export const CreateCard: FC<Props> = () => {
             })
          }
       },
-      [cardFront, cardBack, cardStatus]
+      [cardFront, cardBack,cardCollection]
    )
 
    const onChange = useCallback(
@@ -55,14 +57,16 @@ export const CreateCard: FC<Props> = () => {
          const value = e.target.value
          if (name === "front") {
             setCardFront(value)
-         } else if (name === "back") {
+         } else   {
             setCardBack(value)
-         } else {
-            setCardStatus(value)
-         }
+         } 
       },
       [],
    )
+
+   const onDropdownSelect=useCallback((value)=>{
+      setCardCollection(value)
+   },[])
 
    return (
       <>
@@ -78,7 +82,7 @@ export const CreateCard: FC<Props> = () => {
                   <input type="text" placeholder="Back" onChange={onChange} value={cardBack} name="back" />
                </div>
                <div className="">
-                  <input type="text" placeholder="Status" onChange={onChange} value={cardStatus} name="status" />
+                  <Dropdown onSelection={onDropdownSelect} options={dropdownOptions}/>
                </div>
 
                <div className="">

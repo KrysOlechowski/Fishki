@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { Button, Wrapper as DropdownWrapper, Menu, MenuItem } from 'react-aria-menubutton';
 
 import styled from "styled-components/macro";
@@ -9,24 +9,25 @@ import { ArrowDownIcon } from '../../../assets/icons'
 
 interface Props {
    options: { label: string }[]
-   onClick?: any;
+   onSelection: (value:string)=>void;
+   className?:string;
 }
 
 
 
-export const Dropdown: FC<Props> = ({ options, onClick }) => {
+export const Dropdown: FC<Props> = ({ options, onSelection ,className}) => {
    const [isOpen, setIsOpen] = useState(false);
 
    const onMenuToggle = (e: { isOpen: boolean | ((prevState: boolean) => boolean); }) => {
       setIsOpen(e.isOpen);
    };
 
-   const handleSelection = () => {
-      console.log("handle selection")
-   }
+   const handleSelection = useCallback((e) => {
+      onSelection(e)
+   },[onSelection])
 
    return (
-      <Wrapper className="wrapper">
+      <Wrapper className={clsx("wrapper",className)}>
          <DropdownWrapper
             className="dropdown"
             onSelection={handleSelection}
