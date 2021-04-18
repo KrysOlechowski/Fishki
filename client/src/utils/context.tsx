@@ -5,14 +5,16 @@ import { Card, CardUpdate, CardUpdateStatus } from "../types";
 
 
 
-const contextProvider = createContext<{ cards:any; error:any; fetchCards:any; }|null>(null);
+const contextProvider = createContext<{activeCardIndex:number;increaseActiveCardIndex:()=>void; cards:any; error:any; fetchCards:any; }|null>(null);
 
 const Provider = contextProvider.Provider;
 
 
 export const MainContextProvider: React.FC = ({ children }) => {
-const [cards,setCards]=useState<Card[]>([])
-const [error,setError]=useState<boolean>(false)
+   const [activeCardIndex,setActiveCardIndex]=useState(0)
+   
+   const [cards,setCards]=useState<Card[]>([])
+   const [error,setError]=useState<boolean>(false)
 
    const fetchCards=useCallback(
       () => {
@@ -24,10 +26,13 @@ const [error,setError]=useState<boolean>(false)
       [],
    )
 
-   
-
+   const increaseActiveCardIndex=useCallback(()=>{
+      const increasedIndex = activeCardIndex +1
+      setActiveCardIndex(increasedIndex)
+   },[activeCardIndex])
+console.log(activeCardIndex)
      
-    const contextValue = useMemo(() => ({cards,error,fetchCards}), [cards,error,fetchCards]);
+    const contextValue = useMemo(() => ({cards,error,fetchCards,activeCardIndex,increaseActiveCardIndex}), [cards,error,fetchCards,activeCardIndex,increaseActiveCardIndex]);
 
     return <Provider value={contextValue}>{children}</Provider>;
 };

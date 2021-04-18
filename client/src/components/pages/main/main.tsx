@@ -8,6 +8,7 @@ import { CreateCollection } from '../../organisms/create-collection'
 import { Card } from '../../../types'
 import { CardComponent } from '../../organisms/card'
 import {Statistics}from '../../organisms/statistics'
+import {Lesson}from '../../organisms/lesson'
 
 import {useMainContext}from '../../../utils'
 
@@ -32,6 +33,8 @@ export const Main: FC<MainProps> = () => {
          <MenuWrapper>
             <CreateCard />
          </MenuWrapper>
+
+         <Lesson/>
 
          <CardsWrapper>
             {cards && cards.map((card: Card) => {

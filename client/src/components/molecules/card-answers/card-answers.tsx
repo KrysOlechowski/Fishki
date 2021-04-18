@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC, useCallback, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 import { Card, CardStatus } from '../../../types';
-import { useEditCard } from '../../../utils';
+import { useEditCard, useMainContext } from '../../../utils';
 
 
 
@@ -13,7 +13,7 @@ interface Props {
 
 
 export const CardAnswers: FC<Props> = ({ card }) => {
-   const {editCard}=useEditCard()
+   const {editAnswer}=useEditCard()
 
    const handleClick = useCallback(
       (e) => {
@@ -22,12 +22,13 @@ export const CardAnswers: FC<Props> = ({ card }) => {
          const {goodAnswers,badAnswers}=card
 
          if(answer==="good"){
-            editCard({id:card._id,goodAnswers:goodAnswers+1,status:CardStatus.good})
+            editAnswer({id:card._id,goodAnswers:goodAnswers+1,status:CardStatus.good})
          }else{
-            editCard({id:card._id,badAnswers:badAnswers+1,status:CardStatus.bad})
+            editAnswer({id:card._id,badAnswers:badAnswers+1,status:CardStatus.bad})
          }
+
       },
-      [editCard,card],
+      [editAnswer,card],
    )
 
   
