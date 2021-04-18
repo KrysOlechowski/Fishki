@@ -16,6 +16,7 @@ interface Props {
 
 
 export const Dropdown: FC<Props> = ({ options, onSelection ,className}) => {
+   const [value,setValue]=useState(options[0].label)
    const [isOpen, setIsOpen] = useState(false);
 
    const onMenuToggle = (e: { isOpen: boolean | ((prevState: boolean) => boolean); }) => {
@@ -23,6 +24,7 @@ export const Dropdown: FC<Props> = ({ options, onSelection ,className}) => {
    };
 
    const handleSelection = useCallback((e) => {
+      setValue(e)
       onSelection(e)
    },[onSelection])
 
@@ -34,7 +36,7 @@ export const Dropdown: FC<Props> = ({ options, onSelection ,className}) => {
             onMenuToggle={onMenuToggle}
          >
             <Button className="dropdown-title">
-               <div>{"placeholder"}</div>
+               <div>{value}</div>
                <div>
                   <ArrowDownIcon className={clsx('dropdown-arrow', { 'rotate': isOpen })} />
                </div>

@@ -15,7 +15,6 @@ export interface CardUpdate {
   id: string;
   front: string;
   back: string;
-  status: CardStatus;
   collectionName: string;
 }
 

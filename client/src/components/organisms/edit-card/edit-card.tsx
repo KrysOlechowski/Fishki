@@ -15,13 +15,14 @@ interface Props {
 
 
 export const EditCard: FC<Props> = ({ card }) => {
+   const dropdownOptions = COLLECTIONS_OPTIONS
+
    const { front, back, status, _id: id } = card
    const [isOnEditMode, setIsOnEditMode] = useState(false)
    const [cardUpdateStatus, setCardUpdateStatus] = useState(CardUpdateStatus.NONE)
    const [formFront, setFormFront] = useState(front)
    const [formBack, setFormBack] = useState(back)
-   const [cardCollection,setCardCollection]=useState("")
-   const dropdownOptions = COLLECTIONS_OPTIONS
+   const [cardCollection,setCardCollection]=useState(COLLECTIONS_OPTIONS[0].label)
 
    const {fetchCards}=useMainContext()
 
@@ -44,7 +45,6 @@ export const EditCard: FC<Props> = ({ card }) => {
             id: id,
             front: formFront,
             back: formBack,
-            status: CardStatus.good,
             collectionName:cardCollection
          }
          updateCard(updatedFields).then(res => {
