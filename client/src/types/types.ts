@@ -20,6 +20,7 @@ export interface CardUpdate {
   collectionName?: string;
   goodAnswers?:number;
   badAnswers?:number;
+  status?: CardStatus;
 }
 
 export enum CardStatus {

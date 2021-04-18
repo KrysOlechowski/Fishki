@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import '../../../theme/variables.scss'
 
 
-import { Card, CardDeleteStatus } from '../../../types';
+import { Card, CardDeleteStatus ,CardStatus} from '../../../types';
 import { deleteCard, useMainContext } from '../../../utils';
 
 import { EditCard } from '../edit-card'
@@ -15,9 +15,10 @@ interface Props {
 
 
 export const CardComponent: FC<Props> = ({ card }) => {
+
    const { front, back, status, collectionName,_id: id ,goodAnswers,badAnswers} = card
    const [cardDeleteStatus, setCardDeletestatus] = useState(CardDeleteStatus.NONE)
-
+   
    const {fetchCards}=useMainContext()
 
    const onDeleteCard = useCallback(
@@ -54,10 +55,19 @@ export const CardComponent: FC<Props> = ({ card }) => {
       }
    }, [cardDeleteStatus])
 
+   const cardStatusClassName=useMemo(() => {
+      if(card.status===CardStatus.good){
+         return CardStatus.good
+      }else if(card.status===CardStatus.bad){
+         return CardStatus.bad
+      }else{
+         return CardStatus.new
+      }
+   }, [card.status])
 
 
    return (
-      <CardWrapper className={clsx("test2", { deleted: cardDeleteStatus === CardDeleteStatus.DELETED })} size="14">
+      <CardWrapper className={clsx("test2", { deleted: cardDeleteStatus === CardDeleteStatus.DELETED },cardStatusClassName)} size="14">
          <EditCard card={card} />
          <h3>front: {front}</h3>
          <h3>back: {back}</h3>
@@ -82,9 +92,22 @@ border:1px solid white;
 background-color:var(--mine-shaft);
 color:white;
 
+&.new{
+   border:3px solid orange;
+}
+
+&.good{
+   border:3px solid green;
+}
+
+&.bad{
+   border:3px solid red;
+}
+
 &.deleted{
    background-color:#a63d40;
 }
+
 ${({ size }) =>
       size === "combined" &&
       `

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC, useCallback, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
-import { Card } from '../../../types';
+import { Card, CardStatus } from '../../../types';
 import { useEditCard } from '../../../utils';
 
 
@@ -22,9 +22,9 @@ export const CardAnswers: FC<Props> = ({ card }) => {
          const {goodAnswers,badAnswers}=card
 
          if(answer==="good"){
-            editCard({id:card._id,goodAnswers:goodAnswers+1})
+            editCard({id:card._id,goodAnswers:goodAnswers+1,status:CardStatus.good})
          }else{
-            editCard({id:card._id,badAnswers:badAnswers+1})
+            editCard({id:card._id,badAnswers:badAnswers+1,status:CardStatus.bad})
          }
       },
       [editCard,card],

@@ -7,6 +7,8 @@ import { CreateCollection } from '../../organisms/create-collection'
 
 import { Card } from '../../../types'
 import { CardComponent } from '../../organisms/card'
+import {Statistics}from '../../organisms/statistics'
+
 import {useMainContext}from '../../../utils'
 
 import '../../../theme/variables.scss'
@@ -17,6 +19,7 @@ interface MainProps {
 export const Main: FC<MainProps> = () => {
    const {cards,error,fetchCards}=useMainContext()
    
+   
    useEffect(() => {
       fetchCards()
    }, [])
@@ -25,9 +28,11 @@ export const Main: FC<MainProps> = () => {
 
    return (
       <MainWrapper>
+      <Statistics/>
          <MenuWrapper>
             <CreateCard />
          </MenuWrapper>
+
          <CardsWrapper>
             {cards && cards.map((card: Card) => {
                return <CardComponent card={card} key={card._id} />
