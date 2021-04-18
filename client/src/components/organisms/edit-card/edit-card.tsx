@@ -1,10 +1,10 @@
 import clsx from 'clsx';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 
 import { EditIcon } from '../../../assets/icons'
-import { Card, CardUpdate, CardUpdateStatus, CardStatus } from '../../../types';
-import { updateCard, useMainContext } from '../../../utils';
+import { Card, CardUpdate,  } from '../../../types';
+import {  useEditCard,  } from '../../../utils';
 import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import { Dropdown } from '../../molecules/dropdown'
 
@@ -19,13 +19,15 @@ export const EditCard: FC<Props> = ({ card }) => {
 
    const { front, back, status, _id: id } = card
    const [isOnEditMode, setIsOnEditMode] = useState(false)
-   const [cardUpdateStatus, setCardUpdateStatus] = useState(CardUpdateStatus.NONE)
    const [formFront, setFormFront] = useState(front)
    const [formBack, setFormBack] = useState(back)
    const [cardCollection,setCardCollection]=useState(COLLECTIONS_OPTIONS[0].label)
 
-   const {fetchCards}=useMainContext()
+   const {hasError,isLoading,isComplete,editCard}=useEditCard()
 
+   useEffect(() => {
+      isComplete&& setIsOnEditMode(false)
+   }, [isComplete])
 
    const onClick = useCallback(
       () => {
@@ -40,41 +42,32 @@ export const EditCard: FC<Props> = ({ card }) => {
 
    const onUpdateCard = useCallback(
       () => {
-         setCardUpdateStatus(CardUpdateStatus.PENDING)
          const updatedFields: CardUpdate = {
             id: id,
             front: formFront,
             back: formBack,
             collectionName:cardCollection
          }
-         updateCard(updatedFields).then(res => {
-            if (res.ok) {
-               setCardUpdateStatus(CardUpdateStatus.UPDATED)
-               fetchCards()
-            }
-         }).catch((err) => {
-            console.log(err)
-            setCardUpdateStatus(CardUpdateStatus.FAILED)
-         })
+         editCard(updatedFields)
       },
-      [id, formFront, formBack,cardCollection,fetchCards],
+      [id, formFront, formBack,cardCollection,editCard],
    )
 
 
    const cardUpdateText = useMemo(() => {
-      if (cardUpdateStatus === CardUpdateStatus.NONE) {
-         return "Update Card"
-      }
-      else if (cardUpdateStatus === CardUpdateStatus.PENDING) {
-         return "Updating Card"
-      } else if (cardUpdateStatus === CardUpdateStatus.FAILED) {
-         return "Updating Card Failed"
-      } else if (cardUpdateStatus === CardUpdateStatus.UPDATED) {
+      if (isComplete) {
          return "Card Updated"
+      }
+      else if (isLoading) {
+         return "Updating Card"
+      } else if (hasError) {
+         return "Updating Card Failed"
+      } else if (!isLoading) {
+         return "Update Card"
       } else {
          return ""
       }
-   }, [cardUpdateStatus])
+   }, [hasError,isLoading,isComplete])
 
    const onInputChange = useCallback(
       (e) => {

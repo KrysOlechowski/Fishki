@@ -2,6 +2,8 @@ export interface Card extends CardCreate {
   _id: string;
   createdAt: string;
   updatedAt: string;
+  goodAnswers:number;
+  badAnswers:number;
 }
 
 export interface CardCreate {
@@ -12,10 +14,12 @@ export interface CardCreate {
 }
 
 export interface CardUpdate {
-  id: string;
-  front: string;
-  back: string;
-  collectionName: string;
+  id?: string;
+  front?: string;
+  back?: string;
+  collectionName?: string;
+  goodAnswers?:number;
+  badAnswers?:number;
 }
 
 export enum CardStatus {

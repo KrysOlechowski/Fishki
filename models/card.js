@@ -17,12 +17,20 @@ const cardSchema = new Schema({
    status: {
       type: String,
       required: true
+   },
+   goodAnswers:{
+      type:Number,
+      required:true
+   },
+   badAnswers:{
+      type:Number,
+      required:true
    }
 
 
 }, { timestamps: true });
 
-// it will automatically search for blogs(plural) collection:
+// it will automatically search for cards(plural) collection:
 const Card = mongoose.model('Card', cardSchema)
 
 module.exports = Card

@@ -65,7 +65,9 @@ app.post('/add', (req, res) => {
       front: body.front,
       back: body.back,
       status: body.status,
-      collectionName: body.collectionName
+      collectionName: body.collectionName,
+      goodAnswers:0,
+      badAnswers:0
    })
 
    card.save()

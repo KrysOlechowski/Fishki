@@ -19,12 +19,11 @@ export const CreateCard: FC<Props> = () => {
    const [cardBack, setCardBack] = useState("")
    const [emptyFieldError, setEmptyFieldError] = useState(false)
    const [cardCreateStatus, setCardCreateStatus] = useState(CardCreateStatus.NEW)
-   const [cardCollection,setCardCollection]=useState("")
-
-      const {fetchCards}=useMainContext()
-
 
    const dropdownOptions = COLLECTIONS_OPTIONS
+   const [cardCollection,setCardCollection]=useState(COLLECTIONS_OPTIONS[0].label)
+
+   const {fetchCards}=useMainContext()
 
    const onSubmit: any = useCallback(
       (e: any) => {

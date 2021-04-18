@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { createContext, useMemo } from "react";
-import { getAllCards, } from ".";
-import { Card } from "../types";
+import { getAllCards, updateCard, } from ".";
+import { Card, CardUpdate, CardUpdateStatus } from "../types";
 
 
 
-const contextProvider = createContext<{ cards:any; error:any; fetchCards:any}|null>(null);
+const contextProvider = createContext<{ cards:any; error:any; fetchCards:any; }|null>(null);
 
 const Provider = contextProvider.Provider;
 
@@ -23,6 +23,8 @@ const [error,setError]=useState<boolean>(false)
       },
       [],
    )
+
+   
 
      
     const contextValue = useMemo(() => ({cards,error,fetchCards}), [cards,error,fetchCards]);

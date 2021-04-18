@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { FC, useCallback, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 import { Card } from '../../../types';
+import { useEditCard } from '../../../utils';
 
 
 
@@ -12,14 +13,24 @@ interface Props {
 
 
 export const CardAnswers: FC<Props> = ({ card }) => {
+   const {editCard}=useEditCard()
 
    const handleClick = useCallback(
       (e) => {
          e.preventDefault()
          const answer = e.target.name
+         const {goodAnswers,badAnswers}=card
+
+         if(answer==="good"){
+            editCard({id:card._id,goodAnswers:goodAnswers+1})
+         }else{
+            editCard({id:card._id,badAnswers:badAnswers+1})
+         }
       },
-      [],
+      [editCard,card],
    )
+
+  
 
    return (
       <Wrapper className={clsx("wrapper")}>

@@ -15,7 +15,7 @@ interface Props {
 
 
 export const CardComponent: FC<Props> = ({ card }) => {
-   const { front, back, status, collectionName,_id: id } = card
+   const { front, back, status, collectionName,_id: id ,goodAnswers,badAnswers} = card
    const [cardDeleteStatus, setCardDeletestatus] = useState(CardDeleteStatus.NONE)
 
    const {fetchCards}=useMainContext()
@@ -63,6 +63,8 @@ export const CardComponent: FC<Props> = ({ card }) => {
          <h3>back: {back}</h3>
          <h3>status: {status}</h3>
          <h3>collection: {collectionName}</h3>
+         <h3>Good: {goodAnswers}</h3>
+         <h3>Bad: {badAnswers}</h3>
          <h3>id: {id}</h3>
          <button onClick={onDeleteCard}>{cardStatusText}</button>
          <CardAnswers card={card} />
