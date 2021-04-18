@@ -20,3 +20,4 @@ export const useGetAllCards = () => {
 
   return { cards, hasError, isLoading };
 };
+

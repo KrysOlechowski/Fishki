@@ -4,7 +4,7 @@ import styled from "styled-components/macro";
 
 import { EditIcon } from '../../../assets/icons'
 import { Card, CardUpdate, CardUpdateStatus, CardStatus } from '../../../types';
-import { updateCard } from '../../../utils';
+import { updateCard, useMainContext } from '../../../utils';
 import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import { Dropdown } from '../../molecules/dropdown'
 
@@ -22,6 +22,9 @@ export const EditCard: FC<Props> = ({ card }) => {
    const [formBack, setFormBack] = useState(back)
    const [cardCollection,setCardCollection]=useState("")
    const dropdownOptions = COLLECTIONS_OPTIONS
+
+   const {fetchCards}=useMainContext()
+
 
    const onClick = useCallback(
       () => {
@@ -47,13 +50,14 @@ export const EditCard: FC<Props> = ({ card }) => {
          updateCard(updatedFields).then(res => {
             if (res.ok) {
                setCardUpdateStatus(CardUpdateStatus.UPDATED)
+               fetchCards()
             }
          }).catch((err) => {
             console.log(err)
             setCardUpdateStatus(CardUpdateStatus.FAILED)
          })
       },
-      [id, formFront, formBack,cardCollection],
+      [id, formFront, formBack,cardCollection,fetchCards],
    )
 
 

@@ -1,12 +1,13 @@
-import { FC, useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { FC,  useEffect,  } from 'react';
 import styled from "styled-components/macro"
 
 import { CreateCard } from '../../organisms/create-card'
 import { CreateCollection } from '../../organisms/create-collection'
-import { getAllCards, getCollectionsNames, getCollectionsNamesAndCards } from '../../../utils';
 
 import { Card } from '../../../types'
 import { CardComponent } from '../../organisms/card'
+import {useMainContext}from '../../../utils'
 
 import '../../../theme/variables.scss'
 interface MainProps {
@@ -14,37 +15,25 @@ interface MainProps {
 
 
 export const Main: FC<MainProps> = () => {
-   const [cards, setCards] = useState<Array<Card> | null>(null)
-   const [hasError, setError] = useState(false)
-
-
+   const {cards,error,fetchCards}=useMainContext()
+   
    useEffect(() => {
-      getAllCards().then(cards => {
-         console.log(cards)
-         setCards(cards)
-      }).catch(() => setError(true))
-      getCollectionsNames().then(collection => {
-         console.log(collection)
-      }).catch(() => setError(true))
-      getCollectionsNamesAndCards()
+      fetchCards()
    }, [])
 
-
+ 
 
    return (
       <MainWrapper>
          <MenuWrapper>
             <CreateCard />
-
          </MenuWrapper>
-
          <CardsWrapper>
-
-            {cards && cards.map(card => {
+            {cards && cards.map((card: Card) => {
                return <CardComponent card={card} key={card._id} />
             })}
          </CardsWrapper>
-         {hasError && (
+         {error && (
             <h1>Error while loading the cards</h1>
          )}
          <CreateCollection />

@@ -6,7 +6,7 @@ import { CardCreateStatus, CardStatus } from '../../../types';
 import { createCard } from '../../../utils/api'
 import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import {Dropdown}from '../../molecules/dropdown'
-
+import {useMainContext}from '../../../utils'
 import '../../../theme/variables.scss'
 
 interface Props {
@@ -20,6 +20,9 @@ export const CreateCard: FC<Props> = () => {
    const [emptyFieldError, setEmptyFieldError] = useState(false)
    const [cardCreateStatus, setCardCreateStatus] = useState(CardCreateStatus.NEW)
    const [cardCollection,setCardCollection]=useState("")
+
+      const {fetchCards}=useMainContext()
+
 
    const dropdownOptions = COLLECTIONS_OPTIONS
 
@@ -41,6 +44,7 @@ export const CreateCard: FC<Props> = () => {
                setCardCreateStatus(CardCreateStatus.CREATED)
                setCardFront("")
                setCardBack("")
+               fetchCards()
 
             }).catch((err) => {
                setCardCreateStatus(CardCreateStatus.FAILED)
@@ -48,7 +52,7 @@ export const CreateCard: FC<Props> = () => {
             })
          }
       },
-      [cardFront, cardBack,cardCollection]
+      [cardFront, cardBack,cardCollection,fetchCards]
    )
 
    const onChange = useCallback(

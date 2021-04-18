@@ -5,7 +5,7 @@ import '../../../theme/variables.scss'
 
 
 import { Card, CardDeleteStatus } from '../../../types';
-import { deleteCard } from '../../../utils';
+import { deleteCard, useMainContext } from '../../../utils';
 
 import { EditCard } from '../edit-card'
 import { CardAnswers } from '../../molecules/card-answers'
@@ -16,8 +16,9 @@ interface Props {
 
 export const CardComponent: FC<Props> = ({ card }) => {
    const { front, back, status, collectionName,_id: id } = card
-
    const [cardDeleteStatus, setCardDeletestatus] = useState(CardDeleteStatus.NONE)
+
+   const {fetchCards}=useMainContext()
 
    const onDeleteCard = useCallback(
       () => {
@@ -27,13 +28,14 @@ export const CardComponent: FC<Props> = ({ card }) => {
             console.log("card deleted + res: ")
             console.log(res)
             setCardDeletestatus(CardDeleteStatus.DELETED)
+            fetchCards()
          }).catch((err) => {
             console.log(err)
             setCardDeletestatus(CardDeleteStatus.FAILED)
 
          })
       },
-      [id],
+      [id,fetchCards],
    )
 
 
