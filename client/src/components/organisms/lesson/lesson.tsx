@@ -1,10 +1,10 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled from "styled-components/macro";
-import clsx from 'clsx'
-import '../../../theme/variables.scss'
 import { useMainContext } from '../../../utils';
 import { CardComponent } from '../card';
+import { LessonStatistics } from '../lesson-statistics'
 
+import '../../../theme/variables.scss'
 
 
 interface Props {
@@ -12,30 +12,33 @@ interface Props {
 
 
 export const Lesson: FC<Props> = () => {
-   const {cards,activeCardIndex:cardIndex}=useMainContext()
+   const { cards, activeCardIndex: cardIndex } = useMainContext()
 
-   const [isCompleteLesson,setIsCompleteLesson]=useState(false)
-   const [activeCardIndex,setActiveCardIndex]=useState(0)
+   const [isCompleteLesson, setIsCompleteLesson] = useState(false)
+   const [activeCardIndex, setActiveCardIndex] = useState(0)
 
-   const numberOfCards= cards.length
+   const numberOfCards = cards.length
 
-useEffect(() => {
-   if(numberOfCards>cardIndex){
-      setActiveCardIndex(cardIndex)
-   }else{
-      setIsCompleteLesson(true)
-   }
-   console.log(cardIndex)
-}, [cardIndex,numberOfCards])
-
+   useEffect(() => {
+      if (numberOfCards > cardIndex) {
+         setActiveCardIndex(cardIndex)
+      } else if (numberOfCards && numberOfCards === cardIndex) {
+         setIsCompleteLesson(true)
+      }
+   }, [cardIndex, numberOfCards, activeCardIndex])
 
 
- console.log(activeCardIndex)
+
 
    return (
       <Wrapper>
-         <h1>{isCompleteLesson?"Lesson Complete":"Lesson"}</h1>
-       {cards.length>1&&  <CardComponent card={cards[activeCardIndex]} key={cards[activeCardIndex]._id} />}
+         <Counts>
+            {activeCardIndex + 1 + " / " + numberOfCards}
+         </Counts>
+
+         <h1>{isCompleteLesson ? "Lesson Complete" : "Lesson"}</h1>
+         {!isCompleteLesson && cards.length > 1 && <CardComponent card={cards[activeCardIndex]} key={cards[activeCardIndex]._id} />}
+         {isCompleteLesson && <LessonStatistics />}
       </Wrapper >
    )
 };
@@ -43,4 +46,10 @@ useEffect(() => {
 
 const Wrapper = styled.div`
 border:1px solid white;
+`
+
+const Counts = styled.div` 
+border:1px solid white;
+font-size:20px;
+width:50px;
 `

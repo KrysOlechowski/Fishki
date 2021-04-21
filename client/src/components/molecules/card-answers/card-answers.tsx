@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback } from 'react';
 import styled from "styled-components/macro";
 import { Card, CardStatus } from '../../../types';
 import { useEditCard, useMainContext } from '../../../utils';
@@ -13,25 +13,32 @@ interface Props {
 
 
 export const CardAnswers: FC<Props> = ({ card }) => {
-   const {editAnswer}=useEditCard()
 
+   const { editAnswer } = useEditCard()
+   const context = useMainContext()
    const handleClick = useCallback(
       (e) => {
          e.preventDefault()
          const answer = e.target.name
-         const {goodAnswers,badAnswers}=card
+         const { goodAnswers, badAnswers } = card
 
-         if(answer==="good"){
-            editAnswer({id:card._id,goodAnswers:goodAnswers+1,status:CardStatus.good})
-         }else{
-            editAnswer({id:card._id,badAnswers:badAnswers+1,status:CardStatus.bad})
+         const lessonModeCopy = context.lessonMode
+         if (answer === "good") {
+            const increasedAnswer = context.lessonMode.goodAnswers + 1
+            context.setLessonMode({ ...lessonModeCopy, goodAnswers: increasedAnswer })
+
+            editAnswer({ id: card._id, goodAnswers: goodAnswers + 1, status: CardStatus.good })
+         } else {
+            const increasedAnswer = context.lessonMode.badAnswers + 1
+            context.setLessonMode({ ...lessonModeCopy, badAnswers: increasedAnswer })
+            editAnswer({ id: card._id, badAnswers: badAnswers + 1, status: CardStatus.bad })
          }
 
       },
-      [editAnswer,card],
+      [editAnswer, card, context,],
    )
 
-  
+
 
    return (
       <Wrapper className={clsx("wrapper")}>
