@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC,  useEffect,  } from 'react';
+import { FC, useCallback, useEffect, } from 'react';
 import styled from "styled-components/macro"
 
 import { CreateCard } from '../../organisms/create-card'
@@ -7,10 +7,11 @@ import { CreateCollection } from '../../organisms/create-collection'
 
 import { Card } from '../../../types'
 import { CardComponent } from '../../organisms/card'
-import {Statistics}from '../../organisms/statistics'
-import {Lesson}from '../../organisms/lesson'
+import { Statistics } from '../../organisms/statistics'
+import { Lesson } from '../../organisms/lesson'
+import { Button } from '../../molecules/button'
 
-import {useMainContext}from '../../../utils'
+import { useMainContext } from '../../../utils'
 
 import '../../../theme/variables.scss'
 interface MainProps {
@@ -18,23 +19,30 @@ interface MainProps {
 
 
 export const Main: FC<MainProps> = () => {
-   const {cards,error,fetchCards}=useMainContext()
-   
-   
+   const { cards, error, fetchCards } = useMainContext()
+   const context = useMainContext()
+   console.log(context)
    useEffect(() => {
       fetchCards()
    }, [])
 
- 
+   const toggleTestMode = useCallback(
+      (_e) => {
+         const testMode = context.isTestMode
+         context.setIsTestMode(!testMode)
+      },
+      [context],
+   )
 
    return (
       <MainWrapper>
-      <Statistics/>
+         <Button label="Test Mode" onClick={toggleTestMode} className="test-button" />
+         <Statistics />
          <MenuWrapper>
             <CreateCard />
          </MenuWrapper>
 
-         <Lesson/>
+         <Lesson />
 
          <CardsWrapper>
             {cards && cards.map((card: Card) => {
@@ -50,13 +58,16 @@ export const Main: FC<MainProps> = () => {
 };
 
 const MainWrapper = styled.div`
-display:flex;
-flex-direction:column;
-background-color:var(--tundora);
+   display:flex;
+   flex-direction:column;
+   background-color:var(--tundora);
+
+   .test-button{
+   max-width:100px;
+}
 `
 
 const MenuWrapper = styled.div`
-
 `
 
 const CardsWrapper = styled.div`

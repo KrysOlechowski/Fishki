@@ -3,8 +3,8 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 
 import { EditIcon } from '../../../assets/icons'
-import { Card, CardUpdate,  } from '../../../types';
-import {  useEditCard,  } from '../../../utils';
+import { Card, CardUpdate, } from '../../../types';
+import { useEditCard, } from '../../../utils';
 import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import { Dropdown } from '../../molecules/dropdown'
 
@@ -21,12 +21,12 @@ export const EditCard: FC<Props> = ({ card }) => {
    const [isOnEditMode, setIsOnEditMode] = useState(false)
    const [formFront, setFormFront] = useState(front)
    const [formBack, setFormBack] = useState(back)
-   const [cardCollection,setCardCollection]=useState(COLLECTIONS_OPTIONS[0].label)
+   const [cardCollection, setCardCollection] = useState(COLLECTIONS_OPTIONS[0].label)
 
-   const {hasError,isLoading,isComplete,editCard}=useEditCard()
+   const { hasError, isLoading, isComplete, editCard } = useEditCard()
 
    useEffect(() => {
-      isComplete&& setIsOnEditMode(false)
+      isComplete && setIsOnEditMode(false)
    }, [isComplete])
 
    const onClick = useCallback(
@@ -36,9 +36,9 @@ export const EditCard: FC<Props> = ({ card }) => {
       [isOnEditMode],
    )
 
-   const onDropdownSelect=useCallback((value)=>{
+   const onDropdownSelect = useCallback((value) => {
       setCardCollection(value)
-   },[])
+   }, [])
 
    const onUpdateCard = useCallback(
       () => {
@@ -46,11 +46,11 @@ export const EditCard: FC<Props> = ({ card }) => {
             id: id,
             front: formFront,
             back: formBack,
-            collectionName:cardCollection
+            collectionName: cardCollection
          }
          editCard(updatedFields)
       },
-      [id, formFront, formBack,cardCollection,editCard],
+      [id, formFront, formBack, cardCollection, editCard],
    )
 
 
@@ -67,7 +67,7 @@ export const EditCard: FC<Props> = ({ card }) => {
       } else {
          return ""
       }
-   }, [hasError,isLoading,isComplete])
+   }, [hasError, isLoading, isComplete])
 
    const onInputChange = useCallback(
       (e) => {
@@ -96,7 +96,9 @@ export const EditCard: FC<Props> = ({ card }) => {
 };
 
 const Wrapper = styled.div`
-
+   position: absolute;
+    top: 0;
+    right: 0;
    background-color:#f0c808;
    width:100%;
    height:100%;
@@ -109,7 +111,7 @@ const Wrapper = styled.div`
 
 }
 
-&,.iconWrapper{
+.iconWrapper{
    position: absolute;
     top: 0;
     right: 0;

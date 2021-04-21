@@ -2,8 +2,8 @@ export interface Card extends CardCreate {
   _id: string;
   createdAt: string;
   updatedAt: string;
-  goodAnswers:number;
-  badAnswers:number;
+  goodAnswers: number;
+  badAnswers: number;
 }
 
 export interface CardCreate {
@@ -18,8 +18,8 @@ export interface CardUpdate {
   front?: string;
   back?: string;
   collectionName?: string;
-  goodAnswers?:number;
-  badAnswers?:number;
+  goodAnswers?: number;
+  badAnswers?: number;
   status?: CardStatus;
 }
 
@@ -27,4 +27,21 @@ export enum CardStatus {
   new = "new",
   good = "good",
   bad = "bad",
+}
+
+export interface ContextLessonMode {
+  goodAnswers: number;
+  badAnswers: number;
+}
+
+export interface Context {
+  activeCardIndex: number;
+  increaseActiveCardIndex: () => void;
+  cards: Card[];
+  error: boolean;
+  fetchCards: () => void;
+  lessonMode: ContextLessonMode;
+  setLessonMode: (lessonMode: ContextLessonMode) => void;
+  isTestMode: boolean;
+  setIsTestMode: (bool: boolean) => void;
 }

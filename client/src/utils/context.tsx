@@ -1,28 +1,25 @@
 import React, { useCallback, useContext, useState } from "react";
 import { createContext, useMemo } from "react";
 import { getAllCards, } from ".";
-import { Card } from "../types";
+import { Card, Context, ContextLessonMode } from "../types";
 
 
 
-const contextProvider = createContext<{ activeCardIndex: number; increaseActiveCardIndex: () => void; cards: Card[]; error: boolean; fetchCards: () => void; lessonMode: any; setLessonMode: any } | null>(null);
+const contextProvider = createContext<Context | null>(null);
 
 const Provider = contextProvider.Provider;
 
-interface LessonMode {
-   goodAnswers: number;
-   badAnswers: number;
-}
+
 
 export const MainContextProvider: React.FC = ({ children }) => {
-   const [lessonMode, setLessonMode] = useState<LessonMode>({
+   const [lessonMode, setLessonMode] = useState<ContextLessonMode>({
       goodAnswers: 0,
       badAnswers: 0
    })
    const [activeCardIndex, setActiveCardIndex] = useState(0)
-
    const [cards, setCards] = useState<Card[]>([])
    const [error, setError] = useState<boolean>(false)
+   const [isTestMode, setIsTestMode] = useState(false)
 
    const fetchCards = useCallback(
       () => {
@@ -39,7 +36,7 @@ export const MainContextProvider: React.FC = ({ children }) => {
       setActiveCardIndex(increasedIndex)
    }, [activeCardIndex])
 
-   const contextValue = useMemo(() => ({ cards, error, fetchCards, activeCardIndex, increaseActiveCardIndex, lessonMode, setLessonMode }), [cards, error, fetchCards, activeCardIndex, increaseActiveCardIndex, lessonMode, setLessonMode]);
+   const contextValue = useMemo(() => ({ cards, error, fetchCards, activeCardIndex, increaseActiveCardIndex, lessonMode, setLessonMode, isTestMode, setIsTestMode }), [cards, error, fetchCards, activeCardIndex, increaseActiveCardIndex, lessonMode, setLessonMode, isTestMode, setIsTestMode]);
 
    return <Provider value={contextValue}>{children}</Provider>;
 };
