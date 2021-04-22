@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 import { useMainContext } from '../../../utils';
 import { CardComponent } from '../card';
@@ -12,12 +12,28 @@ interface Props {
 
 
 export const Lesson: FC<Props> = () => {
-   const { cards, activeCardIndex: cardIndex } = useMainContext()
+   const { cards, activeCardIndex: cardIndex, setLessonMode, lessonMode } = useMainContext()
 
    const [isCompleteLesson, setIsCompleteLesson] = useState(false)
+   const [showStatistics, setShowStatistics] = useState(false)
    const [activeCardIndex, setActiveCardIndex] = useState(0)
 
-   const numberOfCards = cards.length
+   const numberOfCards = useMemo(() => cards.length, [cards.length])
+
+   const prepareStatistics = useCallback(
+      () => {
+         const lesson = lessonMode
+         setLessonMode({ ...lesson, numberOfCards: numberOfCards })
+         setShowStatistics(true)
+      },
+      [lessonMode, numberOfCards, setLessonMode],
+   )
+
+   useEffect(() => {
+      if (isCompleteLesson && !showStatistics) {
+         prepareStatistics()
+      }
+   }, [isCompleteLesson, prepareStatistics, showStatistics])
 
    useEffect(() => {
       if (numberOfCards > cardIndex) {
@@ -29,7 +45,6 @@ export const Lesson: FC<Props> = () => {
 
 
 
-
    return (
       <Wrapper>
          <Counts>
@@ -38,7 +53,7 @@ export const Lesson: FC<Props> = () => {
 
          <h1>{isCompleteLesson ? "Lesson Complete" : "Lesson"}</h1>
          {!isCompleteLesson && cards.length > 1 && <CardComponent card={cards[activeCardIndex]} key={cards[activeCardIndex]._id} />}
-         {isCompleteLesson && <LessonStatistics />}
+         {showStatistics && <LessonStatistics />}
       </Wrapper >
    )
 };

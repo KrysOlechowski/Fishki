@@ -14,7 +14,8 @@ const Provider = contextProvider.Provider;
 export const MainContextProvider: React.FC = ({ children }) => {
    const [lessonMode, setLessonMode] = useState<ContextLessonMode>({
       goodAnswers: 0,
-      badAnswers: 0
+      badAnswers: 0,
+      numberOfCards: 0
    })
    const [activeCardIndex, setActiveCardIndex] = useState(0)
    const [cards, setCards] = useState<Card[]>([])

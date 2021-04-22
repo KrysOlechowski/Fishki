@@ -21,7 +21,6 @@ interface MainProps {
 export const Main: FC<MainProps> = () => {
    const { cards, error, fetchCards } = useMainContext()
    const context = useMainContext()
-   console.log(context)
    useEffect(() => {
       fetchCards()
    }, [])

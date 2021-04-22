@@ -22,54 +22,55 @@ export const useGetAllCards = () => {
   return { cards, hasError, isLoading };
 };
 
-export const useEditCard = ()=>{
-  const [hasError,setError]=useState(false)
-  const [isLoading,setIsLoading]=useState(false)
-  const [isComplete,setIsComplete]=useState(false)
-  const {fetchCards,increaseActiveCardIndex}=useMainContext()
+export const useEditCard = () => {
+  const [hasError, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const { fetchCards, increaseActiveCardIndex } = useMainContext();
 
-useEffect(() => {
-  setIsComplete(false)
-}, [isLoading])
+  useEffect(() => {
+    setIsComplete(false);
+  }, [isLoading]);
 
-  const editCard=useCallback(
-    (updatedFields:CardUpdate) => {
-      setIsLoading(true)
-       updateCard(updatedFields).then(res => {
+  const editCard = useCallback(
+    (updatedFields: CardUpdate) => {
+      setIsLoading(true);
+      updateCard(updatedFields)
+        .then((res) => {
           if (res.ok) {
-            setIsComplete(true)
-            setIsLoading(false)
-             fetchCards()
+            setIsComplete(true);
+            setIsLoading(false);
+            fetchCards();
           }
-       }).catch((err) => {
-        setError(true)
-        setIsLoading(false)
-          console.log(err)
-       })
+        })
+        .catch((err) => {
+          setError(true);
+          setIsLoading(false);
+          console.log(err);
+        });
     },
-    [fetchCards],
- )
+    [fetchCards]
+  );
 
- const editAnswer=useCallback(
-  (updatedFields:CardUpdate) => {
-    setIsLoading(true)
-     updateCard(updatedFields).then(res => {
-        if (res.ok) {
-          setIsComplete(true)
-          setIsLoading(false)
-          increaseActiveCardIndex()
-        }
-     }).catch((err) => {
-      setError(true)
-      setIsLoading(false)
-        console.log(err)
-     })
-  },
-  [increaseActiveCardIndex],
-)
+  const editAnswer = useCallback(
+    (updatedFields: CardUpdate) => {
+      setIsLoading(true);
+      updateCard(updatedFields)
+        .then((res) => {
+          if (res.ok) {
+            setIsComplete(true);
+            setIsLoading(false);
+            increaseActiveCardIndex();
+          }
+        })
+        .catch((err) => {
+          setError(true);
+          setIsLoading(false);
+          console.log(err);
+        });
+    },
+    [increaseActiveCardIndex]
+  );
 
-
-
-
-  return {hasError,isLoading,isComplete,editCard,editAnswer}
-}
+  return { hasError, isLoading, isComplete, editCard, editAnswer };
+};

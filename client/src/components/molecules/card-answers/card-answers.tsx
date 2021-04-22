@@ -15,38 +15,32 @@ interface Props {
 export const CardAnswers: FC<Props> = ({ card }) => {
 
    const { editAnswer } = useEditCard()
-   const context = useMainContext()
+   const { lessonMode, setLessonMode } = useMainContext()
    const handleClick = useCallback(
       (e) => {
          e.preventDefault()
          const answer = e.target.name
          const { goodAnswers, badAnswers } = card
-
-         const lessonModeCopy = context.lessonMode
+         const lesson = lessonMode
          if (answer === "good") {
-            const increasedAnswer = context.lessonMode.goodAnswers + 1
-            context.setLessonMode({ ...lessonModeCopy, goodAnswers: increasedAnswer })
-
+            const increasedAnswer = lessonMode.goodAnswers + 1
+            setLessonMode({ ...lesson, goodAnswers: increasedAnswer })
             editAnswer({ id: card._id, goodAnswers: goodAnswers + 1, status: CardStatus.good })
          } else {
-            const increasedAnswer = context.lessonMode.badAnswers + 1
-            context.setLessonMode({ ...lessonModeCopy, badAnswers: increasedAnswer })
+            const increasedAnswer = lessonMode.badAnswers + 1
+            setLessonMode({ ...lesson, badAnswers: increasedAnswer })
             editAnswer({ id: card._id, badAnswers: badAnswers + 1, status: CardStatus.bad })
          }
-
       },
-      [editAnswer, card, context,],
+      [card, lessonMode, setLessonMode, editAnswer],
    )
 
 
 
    return (
       <Wrapper className={clsx("wrapper")}>
-
          <button onClick={handleClick} name="good" type="submit" >Good</button>
          <button onClick={handleClick} name="bad" type="submit">Bad</button>
-
-
       </Wrapper>
    )
 };

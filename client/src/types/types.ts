@@ -32,6 +32,7 @@ export enum CardStatus {
 export interface ContextLessonMode {
   goodAnswers: number;
   badAnswers: number;
+  numberOfCards: number;
 }
 
 export interface Context {
