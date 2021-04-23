@@ -91,21 +91,27 @@ interface CardWrapperProps {
    size: string;
 }
 const CardWrapper = styled.div<CardWrapperProps>`
+   display:flex;
+   flex-direction:column;
+   justify-content:space-between;
+   margin:10px;
+   padding:10px;
    position:relative;
-   border:1px solid white;
    background-color:var(--mine-shaft);
    color:white;
+   width:250px;
+   height:350px;
 
    &.new{
-      border:3px solid orange;
+      background-color:#feceab
    }
 
    &.good{
-      border:3px solid green;
+      background-color:#99b898;
    }
 
    &.bad{
-      border:3px solid red;
+      background-color:#ff847c;
    }
 
    &.deleted{
@@ -117,7 +123,5 @@ const CardWrapper = styled.div<CardWrapperProps>`
       `
       background-color:green;
    `}
-   width:300px;
-   height:400px;
    font-size:${props => props.size}px;
 `

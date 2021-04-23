@@ -70,6 +70,6 @@ const MenuWrapper = styled.div`
 `
 
 const CardsWrapper = styled.div`
-display:flex;
-
+   display:flex;
+    flex-wrap: wrap;
 `

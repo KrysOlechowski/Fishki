@@ -80,9 +80,8 @@ export const EditCard: FC<Props> = ({ card }) => {
       },
       [],
    )
-
    return (
-      <Wrapper className={clsx("wrapper", { editMode: isOnEditMode })}>
+      <Wrapper status={status} className={clsx("wrapper", { editMode: isOnEditMode })}>
          <EditIcon className="iconWrapper" onClick={onClick} />
 
          <input name="front" value={formFront} onChange={onInputChange}></input>
@@ -95,7 +94,11 @@ export const EditCard: FC<Props> = ({ card }) => {
    )
 };
 
-const Wrapper = styled.div`
+interface WrapperProps {
+   status?: string;
+}
+
+const Wrapper = styled.div<WrapperProps>`
    position: absolute;
     top: 0;
     right: 0;
@@ -120,4 +123,11 @@ const Wrapper = styled.div`
 &:hover{
    cursor: pointer;
 }
+
+   background-color: ${({ status }) =>
+      status === 'new' && '#EEC09E' ||
+      status === 'good' && '#88A586' ||
+      '#E47874'
+   };
+
 `
