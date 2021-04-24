@@ -36,11 +36,6 @@ export const Main: FC<MainProps> = () => {
    return (
       <MainWrapper>
          <Button label="Test Mode" onClick={toggleTestMode} className="test-button" />
-         <Statistics />
-         <MenuWrapper>
-            <CreateCard />
-         </MenuWrapper>
-
          <Lesson />
 
          <CardsWrapper>
@@ -51,7 +46,11 @@ export const Main: FC<MainProps> = () => {
          {error && (
             <h1>Error while loading the cards</h1>
          )}
+         <MenuWrapper>
+            <CreateCard />
+         </MenuWrapper>
          <CreateCollection />
+         <Statistics />
       </MainWrapper>
    )
 };
@@ -60,6 +59,7 @@ const MainWrapper = styled.div`
    display:flex;
    flex-direction:column;
    background-color:var(--tundora);
+   background-color:#2a363b;
 
    .test-button{
    max-width:100px;
@@ -71,5 +71,5 @@ const MenuWrapper = styled.div`
 
 const CardsWrapper = styled.div`
    display:flex;
-    flex-wrap: wrap;
+   flex-wrap: wrap;
 `

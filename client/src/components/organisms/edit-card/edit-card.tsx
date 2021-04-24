@@ -1,20 +1,22 @@
+/* eslint-disable no-mixed-operators */
 import clsx from 'clsx';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 
-import { EditIcon } from '../../../assets/icons'
 import { Card, CardUpdate, } from '../../../types';
 import { useEditCard, } from '../../../utils';
 import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import { Dropdown } from '../../molecules/dropdown'
+import { EditButton } from '../../molecules/edit-button';
 
 interface Props {
    card: Card;
+   onCardFlip: () => void;
 }
 
 
 
-export const EditCard: FC<Props> = ({ card }) => {
+export const EditCard: FC<Props> = ({ card, onCardFlip }) => {
    const dropdownOptions = COLLECTIONS_OPTIONS
 
    const { front, back, status, _id: id } = card
@@ -28,13 +30,6 @@ export const EditCard: FC<Props> = ({ card }) => {
    useEffect(() => {
       isComplete && setIsOnEditMode(false)
    }, [isComplete])
-
-   const onClick = useCallback(
-      () => {
-         setIsOnEditMode(!isOnEditMode)
-      },
-      [isOnEditMode],
-   )
 
    const onDropdownSelect = useCallback((value) => {
       setCardCollection(value)
@@ -82,8 +77,7 @@ export const EditCard: FC<Props> = ({ card }) => {
    )
    return (
       <Wrapper status={status} className={clsx("wrapper", { editMode: isOnEditMode })}>
-         <EditIcon className="iconWrapper" onClick={onClick} />
-
+         <EditButton onClick={onCardFlip} />
          <input name="front" value={formFront} onChange={onInputChange}></input>
          <input name="back" value={formBack} onChange={onInputChange}></input>
          <h3>status: {status}</h3>
@@ -99,35 +93,6 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-   position: absolute;
-    top: 0;
-    right: 0;
-   background-color:#f0c808;
-   width:100%;
-   height:100%;
-   clip-path: circle(30px at 95% 10px);
-  transition: clip-path 1s;
-  color:black;
-
-&.editMode{
-   clip-path: circle(100%);
-
-}
-
-.iconWrapper{
-   position: absolute;
-    top: 0;
-    right: 0;
-}
-
-&:hover{
-   cursor: pointer;
-}
-
-   background-color: ${({ status }) =>
-      status === 'new' && '#EEC09E' ||
-      status === 'good' && '#88A586' ||
-      '#E47874'
-   };
-
+ 
 `
+
