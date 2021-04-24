@@ -105,10 +105,12 @@ interface CardWrapperProps {
    size: string;
 }
 const CardWrapper = styled.div<CardWrapperProps>`
+      border-radius: 7px;
+      overflow: hidden;
       width: 250px;
       height: 350px;
       border: 1px solid #CCC;
-      margin: 40px 0;
+      margin: 15px;
       perspective: 600px;
       box-shadow: 2px 3px 15px -5px #000000;
       font-size:${props => props.size}px;
@@ -122,7 +124,6 @@ const Card = styled.div`
    transform-style: preserve-3d;
    transform-origin: center right;
    transition: transform 1s;
-   border:1px solid white;
 
   .cardFace{
       position: absolute;
