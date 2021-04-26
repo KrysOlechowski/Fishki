@@ -40,9 +40,7 @@ export const CardComponent: FC<Props> = ({ card }) => {
          <Card className={clsx({ flipped: flipCard })} >
             <div className={clsx("cardFace front", cardStatusClassName)}>
                <EditButton onClick={onCardFlip} />
-
                <CardFrontInner card={card} />
-
                <CardAnswers card={card} />
             </div>
             <div className="cardFace back">
@@ -57,10 +55,13 @@ interface CardWrapperProps {
    size: string;
 }
 const CardWrapper = styled.div<CardWrapperProps>`
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 20px;
       overflow: hidden;
-      width: 250px;
-      height: 350px;
+      width: 300px;
+      height: 400px;
       margin: 15px;
       perspective: 600px;
       font-size:${props => props.size}px;
@@ -69,8 +70,8 @@ const CardWrapper = styled.div<CardWrapperProps>`
 
 const Card = styled.div`
    position: relative;
-   width: 100%;
-   height: 100%;
+    width: 250px;
+    height: 350px;
    transform-style: preserve-3d;
    transform-origin: center right;
    transition: transform 1s;

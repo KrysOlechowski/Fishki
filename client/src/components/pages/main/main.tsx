@@ -35,7 +35,7 @@ export const Main: FC<MainProps> = () => {
 
    return (
       <MainWrapper>
-         <Button label="Test Mode" onClick={toggleTestMode} className="test-button" />
+         <Button onClick={toggleTestMode} className="test-button" >Test Mode</Button>
          <Lesson />
 
          <CardsWrapper>

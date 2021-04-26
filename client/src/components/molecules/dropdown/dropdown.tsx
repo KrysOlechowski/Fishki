@@ -9,14 +9,14 @@ import { ArrowDownIcon } from '../../../assets/icons'
 
 interface Props {
    options: { label: string }[]
-   onSelection: (value:string)=>void;
-   className?:string;
+   onSelection: (value: string) => void;
+   className?: string;
 }
 
 
 
-export const Dropdown: FC<Props> = ({ options, onSelection ,className}) => {
-   const [value,setValue]=useState(options[0].label)
+export const Dropdown: FC<Props> = ({ options, onSelection, className }) => {
+   const [value, setValue] = useState(options[0].label)
    const [isOpen, setIsOpen] = useState(false);
 
    const onMenuToggle = (e: { isOpen: boolean | ((prevState: boolean) => boolean); }) => {
@@ -26,10 +26,10 @@ export const Dropdown: FC<Props> = ({ options, onSelection ,className}) => {
    const handleSelection = useCallback((e) => {
       setValue(e)
       onSelection(e)
-   },[onSelection])
+   }, [onSelection])
 
    return (
-      <Wrapper className={clsx("wrapper",className)}>
+      <Container className={clsx("wrapper", className)}>
          <DropdownWrapper
             className="dropdown"
             onSelection={handleSelection}
@@ -62,26 +62,27 @@ export const Dropdown: FC<Props> = ({ options, onSelection ,className}) => {
                </ul>
             </Menu>
          </DropdownWrapper>
-      </Wrapper>
+      </Container>
    )
 };
 
-const Wrapper = styled.div`
+const Container = styled.div`
 
 .dropdown{
-   border: 1px solid var(--mercury);
+   border: 1px solid #3F3F3F;
     text-align-last: left;
-    background-color: transparent;
-    border-radius: 0;
+    background-color: white;
+    border-radius: 10px;
+    border-width:2px;
     position: relative;
+
 }
 
 .dropdown-title{
    outline:none;
    position: relative;
     display: flex;
-    border: 1px solid var(--mercury);
-    padding: 15px 20px 15px 15px;
+    padding: 5px;
     color: var(--abbey);
     max-width: 260px;
 }
@@ -103,13 +104,9 @@ const Wrapper = styled.div`
 .dropdown-menu-wrapper{
    outline: none;
     position: absolute;
-    background-color: white;
     z-index: 999999;
     width: 100%;
     max-width: 260px;
-    border-left: 1px solid var(--mercury);
-    border-right: 1px solid var(--mercury);
-    border-bottom: 1px solid var(--mercury);
     box-sizing: border-box;
 
     .dropdown-menu{
@@ -119,9 +116,14 @@ const Wrapper = styled.div`
 
     .dropdown-menu-item{
       outline: none;
+      border: 1px solid #3f3f3f;
+    border-width: 2px;
+    border-radius: 10px;
+    background: white;
 
       &:hover{
          background-color: var(--gallery);
+         cursor: pointer;
       }
 
       .menu-item-wrapper{

@@ -1,17 +1,19 @@
 import clsx from 'clsx';
 import { FC, useCallback, } from 'react';
 import styled from "styled-components/macro";
-
+import { lighten } from 'polished'
 
 interface Props {
-   label: string;
    className?: string;
-   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+   name?: string;
+   onClick: (e: React.MouseEvent<HTMLElement>) => void;
+   bgColor?: string;
+   children: string;
 }
 
 
 
-export const Button: FC<Props> = ({ onClick, className, label }) => {
+export const Button: FC<Props> = ({ onClick, className, name, bgColor, children }) => {
 
    const onButtonClick = useCallback(
       (e) => {
@@ -21,12 +23,27 @@ export const Button: FC<Props> = ({ onClick, className, label }) => {
    )
 
    return (
-      <ButtonWrapper onClick={onButtonClick} className={clsx("button", className)}>
-         {label}
+      <ButtonWrapper bgColor={bgColor} name={name} onClick={onButtonClick} className={clsx("button", className)}>
+         {children}
       </ButtonWrapper>
    )
 };
 
-const ButtonWrapper = styled.button`
-   border:1px solid red;
+interface ButtonProps {
+   bgColor?: string;
+}
+
+const ButtonWrapper = styled.button<ButtonProps>`
+   margin:10px;
+   width:100%;
+   padding:5px 10px;
+   border-radius:10px;
+   outline:none;
+   background-color:${props => props.bgColor ? props.bgColor : "#3F3F3F"};
+   color:white;
+
+     &:hover, &:focus {
+        cursor: pointer;
+        background-color:${props => props.bgColor ? lighten('0.1', props.bgColor) : lighten('0.1', "#3F3F3F")};
+  }
 `

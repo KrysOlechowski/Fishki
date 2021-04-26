@@ -44,9 +44,9 @@ const Inner = styled.div`
 
 const Container = styled.div`
    height:275px;
-   background-color:pink;
-
    background: linear-gradient(#F7F8FA, #C8C8C7);
+   border-top-left-radius: 25px;
+   border-top-right-radius: 25px;
 
    .separate-answer{
       border-bottom:1px solid white;

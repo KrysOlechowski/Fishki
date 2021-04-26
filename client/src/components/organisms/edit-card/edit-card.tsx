@@ -8,6 +8,8 @@ import { deleteCard, useEditCard, useMainContext, } from '../../../utils';
 import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import { Dropdown } from '../../molecules/dropdown'
 import { EditButton } from '../../molecules/edit-button';
+import { Button } from '../../molecules/button'
+
 
 interface Props {
    card: Card;
@@ -110,16 +112,15 @@ export const EditCard: FC<Props> = ({ card, onCardFlip }) => {
    }, [cardDeleteStatus])
 
    return (
-      <Wrapper status={status} className={clsx("wrapper", { editMode: isOnEditMode }, { deleted: cardDeleteStatus === CardDeleteStatus.DELETED })}>
+      <Container status={status} className={clsx("wrapper", { editMode: isOnEditMode }, { deleted: cardDeleteStatus === CardDeleteStatus.DELETED })}>
          <EditButton onClick={onCardFlip} />
-         <input name="front" value={formFront} onChange={onInputChange}></input>
-         <input name="back" value={formBack} onChange={onInputChange}></input>
-         <h3>status: {status}</h3>
-         <h3>id: {id}</h3>
+         <Input name="front" value={formFront} onChange={onInputChange} autoComplete="off"></Input>
+         <Input name="back" value={formBack} onChange={onInputChange} autoComplete="off"></Input>
+
          <Dropdown onSelection={onDropdownSelect} options={dropdownOptions} />
-         <button onClick={onUpdateCard}>{cardUpdateText}</button>
-         <button onClick={onDeleteCard}>{cardStatusText}</button>
-      </Wrapper>
+         <Button onClick={onUpdateCard}>{cardUpdateText}</Button>
+         <Button bgColor="#F48A94" onClick={onDeleteCard}>{cardStatusText}</Button>
+      </Container>
    )
 };
 
@@ -127,7 +128,13 @@ interface WrapperProps {
    status?: string;
 }
 
-const Wrapper = styled.div<WrapperProps>`
- 
+const Container = styled.div<WrapperProps>`
+ padding:20px;
 `
-
+const Input = styled.input`
+   padding: 5px;
+    border-radius: 10px;
+    border-color: #3f3f3f;
+    margin: 5px 0;
+    outline: none;
+`

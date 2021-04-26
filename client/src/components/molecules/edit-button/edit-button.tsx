@@ -4,7 +4,6 @@ import styled from "styled-components/macro";
 
 import { EditIcon } from '../../../assets/icons'
 
-
 interface Props {
    onClick: () => void;
 }

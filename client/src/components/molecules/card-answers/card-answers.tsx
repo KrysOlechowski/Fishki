@@ -1,9 +1,11 @@
-import clsx from 'clsx';
 import { FC, useCallback } from 'react';
+
+import clsx from 'clsx';
 import styled from "styled-components/macro";
+
 import { Card, CardStatus } from '../../../types';
 import { useEditCard, useMainContext } from '../../../utils';
-
+import { Button } from '../button'
 
 
 interface Props {
@@ -39,8 +41,8 @@ export const CardAnswers: FC<Props> = ({ card }) => {
 
    return (
       <Wrapper className={clsx("wrapper")}>
-         <Button className="good" onClick={handleClick} name="good" type="submit" >Good</Button>
-         <Button className="bad" onClick={handleClick} name="bad" type="submit">Bad</Button>
+         <Button onClick={handleClick} name="good">Good</Button>
+         <Button onClick={handleClick} name="bad">Bad</Button>
       </Wrapper>
    )
 };
@@ -50,21 +52,3 @@ margin-top:13px;
 display:flex;
 `
 
-
-const Button = styled.button`
-   margin:10px;
-   width:100%;
-   padding:5px 10px;
-   border-radius:10px;
-   outline:none;
-   background-color:#3F3F3F;
-   color:white;
-
-   &.good{
-
-   }
-
-   &.bad{
-
-   }
-   `
