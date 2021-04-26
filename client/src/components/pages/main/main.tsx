@@ -60,6 +60,7 @@ const MainWrapper = styled.div`
    flex-direction:column;
    background-color:var(--tundora);
    background-color:#2a363b;
+   background: linear-gradient(#D9D8DF, #A19EAE);
 
    .test-button{
    max-width:100px;

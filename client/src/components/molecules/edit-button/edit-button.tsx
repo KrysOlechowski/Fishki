@@ -28,9 +28,13 @@ export const EditButton: FC<Props> = ({ onClick }) => {
 };
 
 const EditIconWrapper = styled.div`
-   
+      position:absolute;
+      top:6px;
+      right:10px;
+
       svg{
-         width:22px;
+         width:17px;
+         height:17px;
       }
 
       &:hover{

@@ -46,7 +46,7 @@ export const CardAnswers: FC<Props> = ({ card }) => {
 };
 
 const Wrapper = styled.div`
-margin-top:20px;
+margin-top:13px;
 display:flex;
 `
 
@@ -55,16 +55,16 @@ const Button = styled.button`
    margin:10px;
    width:100%;
    padding:5px 10px;
-   border-radius:5px;
+   border-radius:10px;
    outline:none;
+   background-color:#3F3F3F;
+   color:white;
 
    &.good{
-      border-color:#3E5739;
-      background-color:#637E60;
+
    }
 
    &.bad{
-      border-color:#A44C4E;
-      background-color: #C46261;
+
    }
    `

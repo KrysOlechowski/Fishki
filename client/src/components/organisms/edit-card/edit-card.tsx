@@ -3,8 +3,8 @@ import clsx from 'clsx';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
 
-import { Card, CardUpdate, } from '../../../types';
-import { useEditCard, } from '../../../utils';
+import { Card, CardDeleteStatus, CardUpdate, } from '../../../types';
+import { deleteCard, useEditCard, useMainContext, } from '../../../utils';
 import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import { Dropdown } from '../../molecules/dropdown'
 import { EditButton } from '../../molecules/edit-button';
@@ -24,9 +24,10 @@ export const EditCard: FC<Props> = ({ card, onCardFlip }) => {
    const [formFront, setFormFront] = useState(front)
    const [formBack, setFormBack] = useState(back)
    const [cardCollection, setCardCollection] = useState(COLLECTIONS_OPTIONS[0].label)
+   const [cardDeleteStatus, setCardDeletestatus] = useState(CardDeleteStatus.NONE)
 
    const { hasError, isLoading, isComplete, editCard } = useEditCard()
-
+   const { fetchCards } = useMainContext()
    useEffect(() => {
       isComplete && setIsOnEditMode(false)
    }, [isComplete])
@@ -75,8 +76,41 @@ export const EditCard: FC<Props> = ({ card, onCardFlip }) => {
       },
       [],
    )
+   const onDeleteCard = useCallback(
+      () => {
+         setCardDeletestatus(CardDeleteStatus.PENDING)
+         const cardId = id
+         deleteCard(cardId).then((res) => {
+            console.log("card deleted:" + res)
+            setCardDeletestatus(CardDeleteStatus.DELETED)
+            fetchCards()
+         }).catch((err) => {
+            console.log(err)
+            setCardDeletestatus(CardDeleteStatus.FAILED)
+
+         })
+      },
+      [id, fetchCards],
+   )
+
+
+   const cardStatusText = useMemo(() => {
+      if (cardDeleteStatus === CardDeleteStatus.NONE) {
+         return "Delete Card"
+      }
+      else if (cardDeleteStatus === CardDeleteStatus.PENDING) {
+         return "Removing...."
+      } else if (cardDeleteStatus === CardDeleteStatus.FAILED) {
+         return "Failed removing card"
+      } else if (cardDeleteStatus === CardDeleteStatus.DELETED) {
+         return "Card deleted"
+      } else {
+         return ""
+      }
+   }, [cardDeleteStatus])
+
    return (
-      <Wrapper status={status} className={clsx("wrapper", { editMode: isOnEditMode })}>
+      <Wrapper status={status} className={clsx("wrapper", { editMode: isOnEditMode }, { deleted: cardDeleteStatus === CardDeleteStatus.DELETED })}>
          <EditButton onClick={onCardFlip} />
          <input name="front" value={formFront} onChange={onInputChange}></input>
          <input name="back" value={formBack} onChange={onInputChange}></input>
@@ -84,6 +118,7 @@ export const EditCard: FC<Props> = ({ card, onCardFlip }) => {
          <h3>id: {id}</h3>
          <Dropdown onSelection={onDropdownSelect} options={dropdownOptions} />
          <button onClick={onUpdateCard}>{cardUpdateText}</button>
+         <button onClick={onDeleteCard}>{cardStatusText}</button>
       </Wrapper>
    )
 };

@@ -51,6 +51,7 @@
   "devDependencies": {
     "@types/react-aria-menubutton": "^6.2.7",
     "@types/styled-components": "^5.1.9",
+    "prettier": "2.2.1",
     "react-aria-menubutton": "^7.0.1"
   }
 }
