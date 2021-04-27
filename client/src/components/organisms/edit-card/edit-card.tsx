@@ -113,13 +113,24 @@ export const EditCard: FC<Props> = ({ card, onCardFlip }) => {
 
    return (
       <Container status={status} className={clsx("wrapper", { editMode: isOnEditMode }, { deleted: cardDeleteStatus === CardDeleteStatus.DELETED })}>
-         <EditButton onClick={onCardFlip} />
-         <Input name="front" value={formFront} onChange={onInputChange} autoComplete="off"></Input>
-         <Input name="back" value={formBack} onChange={onInputChange} autoComplete="off"></Input>
 
-         <Dropdown onSelection={onDropdownSelect} options={dropdownOptions} />
-         <Button onClick={onUpdateCard}>{cardUpdateText}</Button>
-         <Button bgColor="#F48A94" onClick={onDeleteCard}>{cardStatusText}</Button>
+         <CardBackInner>
+            <EditButton onClick={onCardFlip} />
+            <div>Front:</div>
+            <Input name="front" value={formFront} onChange={onInputChange} autoComplete="off"></Input>
+            <div>Back:</div>
+            <Input name="back" value={formBack} onChange={onInputChange} autoComplete="off"></Input>
+            <div>Collection:</div>
+            <Dropdown onSelection={onDropdownSelect} options={dropdownOptions} />
+         </CardBackInner>
+
+
+
+         <ButtonsWrapper>
+            <Button onClick={onUpdateCard}>{cardUpdateText}</Button>
+            <Button bgColor="#F48A94" onClick={onDeleteCard}>{cardStatusText}</Button>
+         </ButtonsWrapper>
+
       </Container>
    )
 };
@@ -129,12 +140,27 @@ interface WrapperProps {
 }
 
 const Container = styled.div<WrapperProps>`
- padding:20px;
+ display:flex;
+ flex-direction:column;
+
 `
+const CardBackInner = styled.div`
+   height:275px;
+   background: linear-gradient(#F7F8FA, #C8C8C7);
+   padding:20px;
+       border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+`
+
 const Input = styled.input`
    padding: 5px;
     border-radius: 10px;
     border-color: #3f3f3f;
     margin: 5px 0;
     outline: none;
+`
+
+const ButtonsWrapper = styled.div`
+   background-color:white;
+   display:flex;
 `

@@ -108,7 +108,7 @@ const Card = styled.div`
          }
 
       &.back{
-         background-color:red;
+         background-color:white;
            transform: rotateY(180deg);
       }
   }
