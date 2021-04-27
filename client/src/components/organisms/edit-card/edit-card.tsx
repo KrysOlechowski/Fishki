@@ -123,9 +123,6 @@ export const EditCard: FC<Props> = ({ card, onCardFlip }) => {
             <div>Collection:</div>
             <Dropdown onSelection={onDropdownSelect} options={dropdownOptions} />
          </CardBackInner>
-
-
-
          <ButtonsWrapper>
             <Button onClick={onUpdateCard}>{cardUpdateText}</Button>
             <Button bgColor="#F48A94" onClick={onDeleteCard}>{cardStatusText}</Button>

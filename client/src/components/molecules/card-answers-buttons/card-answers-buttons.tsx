@@ -14,7 +14,7 @@ interface Props {
 
 
 
-export const CardAnswers: FC<Props> = ({ card }) => {
+export const CardAnswersButtons: FC<Props> = ({ card }) => {
 
    const { editAnswer } = useEditCard()
    const { lessonMode, setLessonMode } = useMainContext()

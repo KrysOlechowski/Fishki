@@ -7,7 +7,7 @@ import '../../../theme/variables.scss'
 import { Card as CardInterface, CardStatus } from '../../../types';
 
 import { EditCard } from '../edit-card'
-import { CardAnswers } from '../../molecules/card-answers'
+import { CardAnswersButtons } from '../../molecules/card-answers-buttons'
 import { EditButton } from '../../molecules/edit-button';
 import { CardFrontInner } from '../../molecules/card-front-inner'
 interface Props {
@@ -41,7 +41,7 @@ export const CardComponent: FC<Props> = ({ card }) => {
             <div className={clsx("cardFace front", cardStatusClassName)}>
                <EditButton onClick={onCardFlip} />
                <CardFrontInner card={card} />
-               <CardAnswers card={card} />
+               <CardAnswersButtons card={card} />
             </div>
             <div className="cardFace back">
                <EditCard card={card} onCardFlip={onCardFlip} />
