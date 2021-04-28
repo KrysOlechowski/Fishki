@@ -1,8 +1,9 @@
-import { FC, } from 'react';
+import { FC, useCallback, useState, } from 'react';
 import styled from "styled-components/macro";
+
 import { Card } from '../../../types';
 import { useMainContext } from '../../../utils';
-
+import { CardAnswers } from '../card-answers'
 
 interface Props {
    card: Card;
@@ -10,15 +11,24 @@ interface Props {
 
 
 export const CardFrontInner: FC<Props> = ({ card }) => {
-   const { front, back, status, collectionName, _id: id, goodAnswers, badAnswers } = card
+   const [showAnswer, setShowAnswer] = useState(false)
+
+   const { status, collectionName, _id: id, goodAnswers, badAnswers } = card
+
+
    const { isTestMode } = useMainContext()
+
+   const onShowAnswer = useCallback(
+      () => {
+         setShowAnswer(true)
+      },
+      [setShowAnswer],
+   )
 
    return (
       <Container>
-         <Inner>
-            <h3>{front}</h3>
-            <div className="separate-answer"></div>
-            <h3>{back}</h3>
+         <Inner onClick={onShowAnswer} >
+            <CardAnswers card={card} onShowAnswer={onShowAnswer} showAnswer={showAnswer} />
             {
                isTestMode && (
                   <>
@@ -39,7 +49,11 @@ export const CardFrontInner: FC<Props> = ({ card }) => {
 
 const Inner = styled.div`
    height:100%;
-      padding:20px;
+   padding:20px;
+
+   &:hover{
+      cursor: pointer;
+   }
 `
 
 const Container = styled.div`
@@ -48,9 +62,6 @@ const Container = styled.div`
    border-top-left-radius: 25px;
    border-top-right-radius: 25px;
 
-   .separate-answer{
-      border-bottom:1px solid white;
-   }
    
    .separate-line{
    box-shadow: 0px -2px 10px 1px #3f3f3f;
