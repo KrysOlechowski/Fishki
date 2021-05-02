@@ -9,7 +9,7 @@ import { Card } from '../../../types'
 import { CardComponent } from '../../organisms/card'
 import { Statistics } from '../../organisms/statistics'
 import { Lesson } from '../../organisms/lesson'
-import { Button } from '../../molecules/button'
+import { Button } from '../../atoms/button'
 
 import { useMainContext } from '../../../utils'
 

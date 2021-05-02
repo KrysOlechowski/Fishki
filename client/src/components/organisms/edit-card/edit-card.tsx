@@ -8,7 +8,7 @@ import { deleteCard, useEditCard, useMainContext, } from '../../../utils';
 import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import { Dropdown } from '../../molecules/dropdown'
 import { EditButton } from '../../molecules/edit-button';
-import { Button } from '../../molecules/button'
+import { Button } from '../../atoms/button'
 
 
 interface Props {
@@ -57,7 +57,7 @@ export const EditCard: FC<Props> = ({ card, onCardFlip }) => {
          return "Card Updated"
       }
       else if (isLoading) {
-         return "Updating Card"
+         return "Updating..."
       } else if (hasError) {
          return "Updating Card Failed"
       } else if (!isLoading) {

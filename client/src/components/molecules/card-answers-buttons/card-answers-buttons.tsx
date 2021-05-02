@@ -5,7 +5,7 @@ import styled from "styled-components/macro";
 
 import { Card, CardStatus } from '../../../types';
 import { useEditCard, useMainContext } from '../../../utils';
-import { Button } from '../button'
+import { Button } from '../../atoms/button'
 
 
 interface Props {
@@ -41,8 +41,8 @@ export const CardAnswersButtons: FC<Props> = ({ card }) => {
 
    return (
       <Wrapper className={clsx("wrapper")}>
-         <Button onClick={handleClick} name="good">Good</Button>
-         <Button onClick={handleClick} name="bad">Bad</Button>
+         <Button className="card-answer-button" onClick={handleClick} name="good">Good</Button>
+         <Button className="card-answer-button"  onClick={handleClick} name="bad">Bad</Button>
       </Wrapper>
    )
 };
@@ -50,5 +50,9 @@ export const CardAnswersButtons: FC<Props> = ({ card }) => {
 const Wrapper = styled.div`
 margin-top:13px;
 display:flex;
+
+   .card-answer-button{
+      margin:10px
+   }
 `
 

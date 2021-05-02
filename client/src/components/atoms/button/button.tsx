@@ -6,14 +6,15 @@ import { lighten } from 'polished'
 interface Props {
    className?: string;
    name?: string;
-   onClick: (e: React.MouseEvent<HTMLElement>) => void;
+   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
    bgColor?: string;
    children: string;
+   type?:"button" | "submit" | "reset" | undefined;
 }
 
 
 
-export const Button: FC<Props> = ({ onClick, className, name, bgColor, children }) => {
+export const Button: FC<Props> = ({ onClick, className, name, bgColor, children ,type}) => {
 
    const onButtonClick = useCallback(
       (e) => {
@@ -23,7 +24,7 @@ export const Button: FC<Props> = ({ onClick, className, name, bgColor, children 
    )
 
    return (
-      <ButtonWrapper bgColor={bgColor} name={name} onClick={onButtonClick} className={clsx("button", className)}>
+      <ButtonWrapper bgColor={bgColor} name={name} onClick={onButtonClick} className={clsx("button", className)} type={type}>
          {children}
       </ButtonWrapper>
    )
@@ -34,7 +35,6 @@ interface ButtonProps {
 }
 
 const ButtonWrapper = styled.button<ButtonProps>`
-   margin:10px;
    width:100%;
    padding:5px 10px;
    border-radius:10px;

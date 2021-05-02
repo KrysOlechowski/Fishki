@@ -1,12 +1,17 @@
 import React, { FC, useCallback, useState } from 'react';
 import styled from 'styled-components'
+
 import { CreateCardStatus } from '../../atoms/create-card-status';
+import{Input}from '../../atoms/input'
+import {Button} from'../../atoms/button';
 import { CardCreateStatus, CardStatus } from '../../../types';
 
 import { createCard } from '../../../utils/api'
 import { COLLECTIONS_OPTIONS } from '../../../utils/constants';
 import {Dropdown}from '../../molecules/dropdown'
 import {useMainContext}from '../../../utils'
+
+
 import '../../../theme/variables.scss'
 
 interface Props {
@@ -79,17 +84,24 @@ export const CreateCard: FC<Props> = () => {
             <form action="submit" onSubmit={onSubmit} autoComplete="off">
 
                <div className="">
-                  <input type="text" placeholder="Front" onChange={onChange} value={cardFront} name="front" />
+                  <Input    
+                     type="text"
+                     placeholder="Front"
+                     onChange={onChange}
+                     name="front"
+                     value={cardFront}
+                  />
+
                </div>
                <div className="">
-                  <input type="text" placeholder="Back" onChange={onChange} value={cardBack} name="back" />
+                  <Input type="text" placeholder="Back" onChange={onChange} value={cardBack} name="back" />
                </div>
                <div className="">
                   <Dropdown onSelection={onDropdownSelect} options={dropdownOptions}/>
                </div>
 
                <div className="">
-                  <button type="submit">Submit</button>
+                  <Button className="create-card-button" type="submit">Submit</Button>
                </div>
                <CreateCardStatus status={cardCreateStatus} />
                {emptyFieldError && (
@@ -109,4 +121,8 @@ padding:50px;
 border:1px solid white;
 background-color:var(--mine-shaft);
 color:white;
+
+   .create-card-button{
+      margin:10px 0;
+   }
 `
