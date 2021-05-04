@@ -124,8 +124,8 @@ export const EditCard: FC<Props> = ({ card, onCardFlip }) => {
             <Dropdown onSelection={onDropdownSelect} options={dropdownOptions} />
          </CardBackInner>
          <ButtonsWrapper>
-            <Button onClick={onUpdateCard}>{cardUpdateText}</Button>
-            <Button bgColor="#F48A94" onClick={onDeleteCard}>{cardStatusText}</Button>
+            <Button className="edit-card-button" onClick={onUpdateCard}>{cardUpdateText}</Button>
+            <Button className="edit-card-button" bgColor="#F48A94" onClick={onDeleteCard}>{cardStatusText}</Button>
          </ButtonsWrapper>
 
       </Container>
@@ -145,7 +145,7 @@ const CardBackInner = styled.div`
    height:275px;
    background: linear-gradient(#F7F8FA, #C8C8C7);
    padding:20px;
-       border-top-left-radius: 25px;
+   border-top-left-radius: 25px;
     border-top-right-radius: 25px;
 `
 
@@ -158,6 +158,11 @@ const Input = styled.input`
 `
 
 const ButtonsWrapper = styled.div`
+   margin-top:13px;
    background-color:white;
    display:flex;
+
+   .edit-card-button{
+      margin:10px;
+   }
 `

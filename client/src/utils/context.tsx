@@ -19,8 +19,10 @@ export const MainContextProvider: React.FC = ({ children }) => {
    })
    const [activeCardIndex, setActiveCardIndex] = useState(0)
    const [cards, setCards] = useState<Card[]>([])
+
    const [error, setError] = useState<boolean>(false)
    const [isTestMode, setIsTestMode] = useState(false)
+   const [isLessonMode, setIsLessonMode] = useState(false)
 
    const fetchCards = useCallback(
       () => {
@@ -37,7 +39,8 @@ export const MainContextProvider: React.FC = ({ children }) => {
       setActiveCardIndex(increasedIndex)
    }, [activeCardIndex])
 
-   const contextValue = useMemo(() => ({ cards, error, fetchCards, activeCardIndex, increaseActiveCardIndex, lessonMode, setLessonMode, isTestMode, setIsTestMode }), [cards, error, fetchCards, activeCardIndex, increaseActiveCardIndex, lessonMode, setLessonMode, isTestMode, setIsTestMode]);
+
+   const contextValue = useMemo(() => ({ cards, error, fetchCards, activeCardIndex, increaseActiveCardIndex, lessonMode, setLessonMode, isTestMode, setIsTestMode, isLessonMode, setIsLessonMode }), [cards, error, fetchCards, activeCardIndex, increaseActiveCardIndex, lessonMode, setLessonMode, isTestMode, setIsTestMode, isLessonMode, setIsLessonMode]);
 
    return <Provider value={contextValue}>{children}</Provider>;
 };

@@ -42,14 +42,14 @@ export const CardAnswersButtons: FC<Props> = ({ card }) => {
    return (
       <Wrapper className={clsx("wrapper")}>
          <Button className="card-answer-button" onClick={handleClick} name="good">Good</Button>
-         <Button className="card-answer-button"  onClick={handleClick} name="bad">Bad</Button>
+         <Button className="card-answer-button" onClick={handleClick} name="bad">Bad</Button>
       </Wrapper>
    )
 };
 
 const Wrapper = styled.div`
-margin-top:13px;
-display:flex;
+   margin-top:13px;
+   display:flex;
 
    .card-answer-button{
       margin:10px

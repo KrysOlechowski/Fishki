@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useCallback, useEffect, } from 'react';
+import { FC, useCallback, useEffect, useState, } from 'react';
 import styled from "styled-components/macro"
 
 import { CreateCard } from '../../organisms/create-card'
@@ -19,38 +19,83 @@ interface MainProps {
 
 
 export const Main: FC<MainProps> = () => {
-   const { cards, error, fetchCards } = useMainContext()
-   const context = useMainContext()
+   const [showAllCards, setShowAllCards] = useState(false)
+   const [showCreateCard, setShowCreateCard] = useState(false)
+   const [showCreateCollection, setShowCreateCollection] = useState(false)
+   const [showStatistics, setShowStatistics] = useState(false)
+   const { cards, fetchCards } = useMainContext()
+   const { isTestMode, setIsTestMode, isLessonMode, setIsLessonMode } = useMainContext()
+
    useEffect(() => {
       fetchCards()
    }, [])
 
    const toggleTestMode = useCallback(
       (_e) => {
-         const testMode = context.isTestMode
-         context.setIsTestMode(!testMode)
+         const testMode = isTestMode
+         setIsTestMode(!testMode)
       },
-      [context],
+      [isTestMode, setIsTestMode],
+   )
+
+   const startLesson = useCallback(
+      () => {
+         setIsLessonMode(true)
+      },
+      [],
+   )
+
+   const showCards = useCallback(
+      () => {
+         setShowAllCards(true)
+      },
+      [],
+   )
+
+   const showCreateCardComponenent = useCallback(
+      () => {
+         setShowCreateCard(true)
+      },
+      [],
+   )
+
+   const showCreateCollectionComponent = useCallback(
+      () => {
+         setShowCreateCollection(true)
+      },
+      [],
+   )
+   const showStatisticsComponent = useCallback(
+      () => {
+         setShowStatistics(true)
+      },
+      [],
    )
 
    return (
       <MainWrapper>
          <Button onClick={toggleTestMode} className="test-button" >Test Mode</Button>
-         <Lesson />
+         {isLessonMode && <Lesson />}
 
-         <CardsWrapper>
+         <Button onClick={startLesson} className="start-lesson-button" >Start Lesson</Button>
+         <Button onClick={showCards} className="show-cards-button" >Show All Cards</Button>
+         <Button onClick={showCreateCardComponenent} className="create-card-button" >Create New Card</Button>
+         <Button onClick={showCreateCollectionComponent} className="create-collection-button" >Create New Collection</Button>
+         <Button onClick={showStatisticsComponent} className="show-statistics-button" >Create New Collection</Button>
+
+         {showAllCards && <CardsWrapper>
             {cards && cards.map((card: Card) => {
                return <CardComponent card={card} key={card._id} />
             })}
          </CardsWrapper>
-         {error && (
-            <h1>Error while loading the cards</h1>
-         )}
-         <MenuWrapper>
+         }
+
+         {showCreateCard && <MenuWrapper>
             <CreateCard />
-         </MenuWrapper>
-         <CreateCollection />
-         <Statistics />
+         </MenuWrapper>}
+
+         {showCreateCollection && <CreateCollection />}
+         {showStatistics && <Statistics />}
       </MainWrapper>
    )
 };
@@ -64,7 +109,23 @@ const MainWrapper = styled.div`
 
    .test-button{
    max-width:100px;
-}
+   }
+   .start-lesson-button{
+      max-width:200px;
+   }
+   .show-cards-button{
+      max-width:200px;
+   }
+   .create-card-button{
+      max-width:200px;
+   }
+   .create-collection-button{
+      max-width:200px;
+   }
+   .show-statistics-button{
+      max-width:200px;
+   }
+
 `
 
 const MenuWrapper = styled.div`
