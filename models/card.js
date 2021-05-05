@@ -18,19 +18,21 @@ const cardSchema = new Schema({
       type: String,
       required: true
    },
-   goodAnswers:{
-      type:Number,
-      required:true
+   goodAnswers: {
+      type: Number,
+      required: true
    },
-   badAnswers:{
-      type:Number,
-      required:true
+   badAnswers: {
+      type: Number,
+      required: true
    }
 
 
 }, { timestamps: true });
 
+const cardCollection = process.env.NODE_ENV === "development" ? "Carddev" : "Card"
+
 // it will automatically search for cards(plural) collection:
-const Card = mongoose.model('Card', cardSchema)
+const Card = mongoose.model(cardCollection, cardSchema)
 
 module.exports = Card
