@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-operators */
 import clsx from 'clsx';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from "styled-components/macro";
@@ -142,7 +141,7 @@ const Container = styled.div<WrapperProps>`
 
 `
 const CardBackInner = styled.div`
-   height:275px;
+   height:  275px;
    background: linear-gradient(#F7F8FA, #C8C8C7);
    padding:20px;
    border-top-left-radius: 25px;

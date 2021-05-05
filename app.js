@@ -53,7 +53,6 @@ app.post('/collections', (req, res) => {
    }).catch((err) => {
       console.log(err)
    })
-
 })
 
 
@@ -66,8 +65,8 @@ app.post('/add', (req, res) => {
       back: body.back,
       status: body.status,
       collectionName: body.collectionName,
-      goodAnswers:0,
-      badAnswers:0
+      goodAnswers: 0,
+      badAnswers: 0
    })
 
    card.save()
