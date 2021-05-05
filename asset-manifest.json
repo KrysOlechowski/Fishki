@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/fishki/static/css/main.64d9e45e.chunk.css",
-    "main.js": "/fishki/static/js/main.ca990255.chunk.js",
-    "main.js.map": "/fishki/static/js/main.ca990255.chunk.js.map",
+    "main.js": "/fishki/static/js/main.26bd4f5a.chunk.js",
+    "main.js.map": "/fishki/static/js/main.26bd4f5a.chunk.js.map",
     "runtime-main.js": "/fishki/static/js/runtime-main.50f5ab8f.js",
     "runtime-main.js.map": "/fishki/static/js/runtime-main.50f5ab8f.js.map",
-    "static/js/2.ab68edb9.chunk.js": "/fishki/static/js/2.ab68edb9.chunk.js",
-    "static/js/2.ab68edb9.chunk.js.map": "/fishki/static/js/2.ab68edb9.chunk.js.map",
+    "static/js/2.df638e20.chunk.js": "/fishki/static/js/2.df638e20.chunk.js",
+    "static/js/2.df638e20.chunk.js.map": "/fishki/static/js/2.df638e20.chunk.js.map",
     "static/js/3.b7d5901c.chunk.js": "/fishki/static/js/3.b7d5901c.chunk.js",
     "static/js/3.b7d5901c.chunk.js.map": "/fishki/static/js/3.b7d5901c.chunk.js.map",
     "index.html": "/fishki/index.html",
     "static/css/main.64d9e45e.chunk.css.map": "/fishki/static/css/main.64d9e45e.chunk.css.map",
-    "static/js/2.ab68edb9.chunk.js.LICENSE.txt": "/fishki/static/js/2.ab68edb9.chunk.js.LICENSE.txt",
+    "static/js/2.df638e20.chunk.js.LICENSE.txt": "/fishki/static/js/2.df638e20.chunk.js.LICENSE.txt",
     "static/media/arrow-down.e802fb6d.svg": "/fishki/static/media/arrow-down.e802fb6d.svg",
     "static/media/edit.8051115a.svg": "/fishki/static/media/edit.8051115a.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.50f5ab8f.js",
-    "static/js/2.ab68edb9.chunk.js",
+    "static/js/2.df638e20.chunk.js",
     "static/css/main.64d9e45e.chunk.css",
-    "static/js/main.ca990255.chunk.js"
+    "static/js/main.26bd4f5a.chunk.js"
   ]
 }
