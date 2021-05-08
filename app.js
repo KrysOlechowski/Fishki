@@ -10,23 +10,27 @@ const DBUri = process.env.DBUri;
 const PORT = process.env.PORT || 3003;
 const cors = require("cors");
 
+const ENV = process.env.NODE_ENV
+const IS_PROD = ENV === "production"
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(session({
-//    name: "sess_name",
-//    resave: false,
-//    saveUninitialized: false,
-//    secret: "secret",
-//    cookie: {
-//       httpOnly: false,
-//       maxAge: 3600000,
-//       path: '/',
-//       secure: false //on prod change to true
-//       // sameSite:true
-//    }
-// }))
-const ENV = process.env.NODE_ENV
+
+// https://www.npmjs.com/package/connect-mongo maybe add this intead of default store:
+app.use(session({
+   name: "sess_name",
+   resave: false,
+   saveUninitialized: false,
+   secret: "secret",
+   cookie: {
+      httpOnly: false,
+      maxAge: 3600000,
+      path: '/',
+      secure: IS_PROD
+      // sameSite:true
+   }
+}))
 mongoose
    .connect(DBUri, { useNewUrlParser: true, useUnifiedTopology: true })
    .then(() => {
@@ -38,7 +42,6 @@ mongoose
    .catch((err) => console.log(err));
 
 app.get("/cards", (req, res) => {
-   res.send({ "LOL": ENV })
    Card.find()
       .then((result) => {
          res.send(result);

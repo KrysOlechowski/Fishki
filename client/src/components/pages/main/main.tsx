@@ -14,103 +14,102 @@ import { Button } from "../../atoms/button";
 import { useMainContext } from "../../../utils";
 
 import "../../../theme/variables.scss";
-interface MainProps { }
+interface MainProps {}
 
 export const Main: FC<MainProps> = () => {
-   const [showAllCards, setShowAllCards] = useState(false);
-   const [showCreateCard, setShowCreateCard] = useState(false);
-   const [showCreateCollection, setShowCreateCollection] = useState(false);
-   const [showStatistics, setShowStatistics] = useState(false);
-   const { cards, fetchCards } = useMainContext();
-   const {
-      isTestMode,
-      setIsTestMode,
-      isLessonMode,
-      setIsLessonMode,
-   } = useMainContext();
+  const [showAllCards, setShowAllCards] = useState(false);
+  const [showCreateCard, setShowCreateCard] = useState(false);
+  const [showCreateCollection, setShowCreateCollection] = useState(false);
+  const [showStatistics, setShowStatistics] = useState(false);
+  const { cards, fetchCards } = useMainContext();
+  const {
+    isTestMode,
+    setIsTestMode,
+    isLessonMode,
+    setIsLessonMode,
+  } = useMainContext();
 
-   useEffect(() => {
-      fetchCards();
-   }, []);
+  useEffect(() => {
+    fetchCards();
+  }, []);
 
-   const toggleTestMode = useCallback(
-      (_e) => {
-         const testMode = isTestMode;
-         setIsTestMode(!testMode);
-      },
-      [isTestMode, setIsTestMode]
-   );
+  const toggleTestMode = useCallback(
+    (_e) => {
+      const testMode = isTestMode;
+      setIsTestMode(!testMode);
+    },
+    [isTestMode, setIsTestMode]
+  );
 
-   const startLesson = useCallback(() => {
-      setIsLessonMode(true);
-   }, []);
+  const startLesson = useCallback(() => {
+    setIsLessonMode(true);
+  }, []);
 
-   const showCards = useCallback(() => {
-      setShowAllCards(true);
-   }, []);
+  const showCards = useCallback(() => {
+    setShowAllCards(true);
+  }, []);
 
-   const showCreateCardComponenent = useCallback(() => {
-      setShowCreateCard(true);
-   }, []);
+  const showCreateCardComponenent = useCallback(() => {
+    setShowCreateCard(true);
+  }, []);
 
-   const showCreateCollectionComponent = useCallback(() => {
-      setShowCreateCollection(true);
-   }, []);
-   const showStatisticsComponent = useCallback(() => {
-      setShowStatistics(true);
-   }, []);
-   console.log(process.env.NODE_ENV)
-   return (
-      <MainWrapper>
-         <Button onClick={toggleTestMode} className="test-button">
-            Test Mode
+  const showCreateCollectionComponent = useCallback(() => {
+    setShowCreateCollection(true);
+  }, []);
+  const showStatisticsComponent = useCallback(() => {
+    setShowStatistics(true);
+  }, []);
+  return (
+    <MainWrapper>
+      <Button onClick={toggleTestMode} className="test-button">
+        Test Mode
       </Button>
-         {isLessonMode && <Lesson />}
+      {isLessonMode && <Lesson />}
 
-         <Button onClick={startLesson} className="start-lesson-button">
-            Start Lesson
+      <Button onClick={startLesson} className="start-lesson-button">
+        Start Lesson
       </Button>
-         <Button onClick={showCards} className="show-cards-button">
-            Show All Cards
+      <Button onClick={showCards} className="show-cards-button">
+        Show All Cards
       </Button>
-         <Button
-            onClick={showCreateCardComponenent}
-            className="create-card-button"
-         >
-            Create New Card
+      <Button
+        onClick={showCreateCardComponenent}
+        className="create-card-button"
+      >
+        Create New Card
       </Button>
-         <Button
-            onClick={showCreateCollectionComponent}
-            className="create-collection-button"
-         >
-            Create New Collection
+      <Button
+        onClick={showCreateCollectionComponent}
+        className="create-collection-button"
+      >
+        Create New Collection
       </Button>
-         <Button
-            onClick={showStatisticsComponent}
-            className="show-statistics-button"
-         >
-            Create New Collection
+      <Button
+        onClick={showStatisticsComponent}
+        className="show-statistics-button"
+      >
+        Create New Collection
       </Button>
 
-         {showAllCards && (
-            <CardsWrapper>
-               {cards &&
-                  cards.map((card: Card) => {
-                     return <CardComponent card={card} key={card._id} />;
-                  })}
-            </CardsWrapper>
-         )}
+      {showAllCards && (
+        <CardsWrapper>
+          {cards &&
+            cards.map((card: Card) => {
+              return <CardComponent card={card} key={card._id} />;
+            })}
+        </CardsWrapper>
+      )}
 
-         {showCreateCard && (
-            <MenuWrapper>
-               <CreateCard />
-            </MenuWrapper>
-         )}
+      {showCreateCard && (
+        <MenuWrapper>
+          <CreateCard />
+        </MenuWrapper>
+      )}
 
-         {showCreateCollection && <CreateCollection />}
-         {showStatistics && <Statistics />}
-      </MainWrapper>
-   );
+      {showCreateCollection && <CreateCollection />}
+      {showStatistics && <Statistics />}
+    </MainWrapper>
+  );
 };
 
 const MainWrapper = styled.div`
