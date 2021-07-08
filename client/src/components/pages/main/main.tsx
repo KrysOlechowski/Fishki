@@ -10,8 +10,11 @@ import { CardComponent } from "../../organisms/card";
 import { Statistics } from "../../organisms/statistics";
 import { Lesson } from "../../organisms/lesson";
 import { Button } from "../../atoms/button";
+import { LoginStatus } from "../../molecules/login-status";
+import { LoginForm } from "../../molecules/login-form";
 
 import { useMainContext } from "../../../utils";
+import { logout } from "../../../utils";
 
 import "../../../theme/variables.scss";
 interface MainProps {}
@@ -21,7 +24,7 @@ export const Main: FC<MainProps> = () => {
   const [showCreateCard, setShowCreateCard] = useState(false);
   const [showCreateCollection, setShowCreateCollection] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
-  const { cards, fetchCards } = useMainContext();
+  const { cards, fetchCards, isLoggedIn } = useMainContext();
   const {
     isTestMode,
     setIsTestMode,
@@ -59,8 +62,22 @@ export const Main: FC<MainProps> = () => {
   const showStatisticsComponent = useCallback(() => {
     setShowStatistics(true);
   }, []);
+
+  const onLogoutClick = useCallback(() => {
+    logout().then((res) => {
+      console.log(res);
+    });
+  }, []);
+
   return (
     <MainWrapper>
+      <LoginStatus />
+      {!isLoggedIn && <LoginForm />}
+      {true && (
+        <Button onClick={onLogoutClick} className="test-button">
+          Logout
+        </Button>
+      )}
       <Button onClick={toggleTestMode} className="test-button">
         Test Mode
       </Button>
