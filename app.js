@@ -1,14 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const MongoStore = require('connect-mongo');
-const cookieParser = require('cookie-parser')
 
 // Authentication:
 const session = require("express-session");
-
-
-
-const cookieSession = require('cookie-session')
+const MongoDbStore = require('connect-mongo');
 
 const app = express();
 require("dotenv").config();
@@ -40,17 +35,19 @@ mongoose
    })
    .catch((err) => console.log(err));
 
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser())
 
 const routesArray = ['/session']
 
 app.use(routesArray, session({
    secret: "key with secret",
    resave: false,
+   store: MongoDbStore.create({
+      mongoUrl: DBUri
+   }),
+   key: 'express.sessionID',
    saveUninitialized: false,
 }))
 
