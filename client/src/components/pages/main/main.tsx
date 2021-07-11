@@ -17,6 +17,7 @@ import { useMainContext } from "../../../utils";
 import { logout } from "../../../utils";
 
 import "../../../theme/variables.scss";
+import { CheckingSession } from "../checking-session";
 interface MainProps {}
 
 export const Main: FC<MainProps> = () => {
@@ -24,7 +25,14 @@ export const Main: FC<MainProps> = () => {
   const [showCreateCard, setShowCreateCard] = useState(false);
   const [showCreateCollection, setShowCreateCollection] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
-  const { cards, fetchCards, isLoggedIn, checkSession } = useMainContext();
+  const [loading, setLoading] = useState(true);
+  const {
+    cards,
+    fetchCards,
+    isLoggedIn,
+    checkSession,
+    isSessionChecking,
+  } = useMainContext();
   const {
     isTestMode,
     setIsTestMode,
@@ -36,6 +44,17 @@ export const Main: FC<MainProps> = () => {
     checkSession();
     fetchCards();
   }, []);
+
+  useEffect(() => {
+    if (isSessionChecking) {
+      setLoading(true);
+    }
+    if (!isSessionChecking) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, [isSessionChecking]);
 
   const toggleTestMode = useCallback(
     (_e) => {
@@ -70,45 +89,52 @@ export const Main: FC<MainProps> = () => {
     });
   }, []);
 
+  console.log(isSessionChecking);
+
   return (
     <MainWrapper>
+      {loading && <CheckingSession />}
       <LoginStatus />
       {!isLoggedIn && <LoginForm />}
-      {true && (
-        <Button onClick={onLogoutClick} className="test-button">
-          Logout
-        </Button>
+
+      {isLoggedIn && (
+        <>
+          <Button onClick={onLogoutClick} className="test-button">
+            Logout
+          </Button>
+
+          <Button onClick={toggleTestMode} className="test-button">
+            Test Mode
+          </Button>
+
+          <Button onClick={startLesson} className="start-lesson-button">
+            Start Lesson
+          </Button>
+          <Button onClick={showCards} className="show-cards-button">
+            Show All Cards
+          </Button>
+          <Button
+            onClick={showCreateCardComponenent}
+            className="create-card-button"
+          >
+            Create New Card
+          </Button>
+          <Button
+            onClick={showCreateCollectionComponent}
+            className="create-collection-button"
+          >
+            Create New Collection
+          </Button>
+          <Button
+            onClick={showStatisticsComponent}
+            className="show-statistics-button"
+          >
+            Create New Collection
+          </Button>
+        </>
       )}
-      <Button onClick={toggleTestMode} className="test-button">
-        Test Mode
-      </Button>
+
       {isLessonMode && <Lesson />}
-
-      <Button onClick={startLesson} className="start-lesson-button">
-        Start Lesson
-      </Button>
-      <Button onClick={showCards} className="show-cards-button">
-        Show All Cards
-      </Button>
-      <Button
-        onClick={showCreateCardComponenent}
-        className="create-card-button"
-      >
-        Create New Card
-      </Button>
-      <Button
-        onClick={showCreateCollectionComponent}
-        className="create-collection-button"
-      >
-        Create New Collection
-      </Button>
-      <Button
-        onClick={showStatisticsComponent}
-        className="show-statistics-button"
-      >
-        Create New Collection
-      </Button>
-
       {showAllCards && (
         <CardsWrapper>
           {cards &&
@@ -134,7 +160,6 @@ const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--tundora);
-  background-color: #2a363b;
   background: linear-gradient(#d9d8df, #a19eae);
 
   .test-button {

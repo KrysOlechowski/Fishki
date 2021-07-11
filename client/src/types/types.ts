@@ -50,4 +50,5 @@ export interface Context {
   isLoggedIn: boolean;
   setIsLoggedIn: (bool: boolean) => void;
   checkSession: () => void;
+  isSessionChecking: boolean;
 }

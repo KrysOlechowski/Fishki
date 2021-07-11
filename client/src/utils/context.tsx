@@ -24,6 +24,7 @@ export const MainContextProvider: React.FC = ({ children }) => {
   const [isLessonMode, setIsLessonMode] = useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSessionChecking, setIsSessionChecking] = useState(true);
 
   const fetchCards = useCallback(() => {
     getAllCards()
@@ -35,12 +36,14 @@ export const MainContextProvider: React.FC = ({ children }) => {
   }, []);
 
   const checkSession = useCallback(() => {
+    setIsSessionChecking(true);
     const cookie = read_cookie("fishki");
     console.log("SESSION:");
     console.log(cookie);
     if (cookie) {
       checkSessionInMongo(cookie).then((res) => {
         console.log(res);
+        setIsSessionChecking(false);
         if (res.cookieExist) {
           setIsLoggedIn(true);
         } else {
@@ -71,6 +74,7 @@ export const MainContextProvider: React.FC = ({ children }) => {
       isLoggedIn,
       setIsLoggedIn,
       checkSession,
+      isSessionChecking,
     }),
     [
       cards,
@@ -87,6 +91,7 @@ export const MainContextProvider: React.FC = ({ children }) => {
       isLoggedIn,
       setIsLoggedIn,
       checkSession,
+      isSessionChecking,
     ]
   );
 
