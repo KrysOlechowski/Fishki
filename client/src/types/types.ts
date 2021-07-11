@@ -49,4 +49,5 @@ export interface Context {
   setIsLessonMode: (bool: boolean) => void;
   isLoggedIn: boolean;
   setIsLoggedIn: (bool: boolean) => void;
+  checkSession: () => void;
 }

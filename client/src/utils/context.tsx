@@ -2,10 +2,13 @@ import React, { useCallback, useContext, useState } from "react";
 import { createContext, useMemo } from "react";
 import { getAllCards } from ".";
 import { Card, Context, ContextLessonMode } from "../types";
+import { checkSessionInMongo } from "../utils";
 
 const contextProvider = createContext<Context | null>(null);
 
 const Provider = contextProvider.Provider;
+
+const { read_cookie } = require("sfcookies");
 
 export const MainContextProvider: React.FC = ({ children }) => {
   const [lessonMode, setLessonMode] = useState<ContextLessonMode>({
@@ -31,6 +34,22 @@ export const MainContextProvider: React.FC = ({ children }) => {
       .catch(() => setError(true));
   }, []);
 
+  const checkSession = useCallback(() => {
+    const cookie = read_cookie("fishki");
+    console.log("SESSION:");
+    console.log(cookie);
+    if (cookie) {
+      checkSessionInMongo(cookie).then((res) => {
+        console.log(res);
+        if (res.cookieExist) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      });
+    }
+  }, []);
+
   const increaseActiveCardIndex = useCallback(() => {
     const increasedIndex = activeCardIndex + 1;
     setActiveCardIndex(increasedIndex);
@@ -51,6 +70,7 @@ export const MainContextProvider: React.FC = ({ children }) => {
       setIsLessonMode,
       isLoggedIn,
       setIsLoggedIn,
+      checkSession,
     }),
     [
       cards,
@@ -66,6 +86,7 @@ export const MainContextProvider: React.FC = ({ children }) => {
       setIsLessonMode,
       isLoggedIn,
       setIsLoggedIn,
+      checkSession,
     ]
   );
 

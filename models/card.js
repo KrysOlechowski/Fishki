@@ -32,7 +32,6 @@ const cardSchema = new Schema({
 
 const cardCollection = process.env.NODE_ENV === "development" ? "Carddev" : "Card"
 
-// it will automatically search for cards(plural) collection:
 const Card = mongoose.model(cardCollection, cardSchema)
 
 module.exports = Card

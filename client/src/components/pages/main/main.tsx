@@ -24,7 +24,7 @@ export const Main: FC<MainProps> = () => {
   const [showCreateCard, setShowCreateCard] = useState(false);
   const [showCreateCollection, setShowCreateCollection] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
-  const { cards, fetchCards, isLoggedIn } = useMainContext();
+  const { cards, fetchCards, isLoggedIn, checkSession } = useMainContext();
   const {
     isTestMode,
     setIsTestMode,
@@ -33,6 +33,7 @@ export const Main: FC<MainProps> = () => {
   } = useMainContext();
 
   useEffect(() => {
+    checkSession();
     fetchCards();
   }, []);
 

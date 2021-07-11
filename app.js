@@ -1,13 +1,16 @@
 const express = require("express");
+const bcrypt = require('bcryptjs')
 const mongoose = require("mongoose");
-
+const cookieParser = require('cookie-parser')
 // Authentication:
-const session = require("express-session");
-const MongoDbStore = require('connect-mongo');
+const session = require('express-session')
+const MongoStore = require('connect-mongo');
+
 
 const app = express();
 require("dotenv").config();
 const Card = require("./models/card");
+const UserModel = require('./models/user');
 const CollectionsNames = require("./models/collections");
 
 const DBUri = process.env.DBUri;
@@ -18,12 +21,6 @@ const ENV = process.env.NODE_ENV;
 const IS_PROD = ENV === "production";
 
 const SESS_NAME = "SID"
-
-const users = [
-   { id: 1, username: "user", email: "email@", password: "pass" },
-   { id: 2, username: "user2", email: "2email@", password: "pass2" },
-   { id: 3, username: "user3", email: "3email@", password: "pass3" },
-]
 
 mongoose
    .connect(DBUri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -38,42 +35,75 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser())
 
-const routesArray = ['/session']
-
-app.use(routesArray, session({
-   secret: "key with secret",
+app.use(session({
+   secret: "secret cookie key",
    resave: false,
-   store: MongoDbStore.create({
-      mongoUrl: DBUri
-   }),
-   key: 'express.sessionID',
    saveUninitialized: false,
+   store: MongoStore.create({ mongoUrl: DBUri, }),
 }))
-
 
 //AUTHENTICATION ROUTES:
 
-app.get("/session", (req, res) => {
-   req.session.isAuth = true;
-   console.log(req.session)
-   console.log(req.session.id)
-   res.send({ test: req.session })
+app.post("/session", async (req, res) => {
+   const { cookie } = req.body
+   console.log(cookie)
+
+   mongoose.connection.db.collection("sessions").find({ "_id": cookie }).toArray((err, info) => {
+      console.log("info")
+      console.log(info)
+      if (info.length > 0) {
+         res.send({
+            cookieExist: true,
+            cookie: info
+         })
+      } else {
+         res.send({
+            cookieExist: false
+         })
+      }
+   })
 });
 
+app.post('/register', async (req, res) => {
+   const { username, email, password } = req.body
+   console.log(req.body)
 
-app.post('/login', (req, res) => {
-   console.log("login")
-   const { username, password } = req.body
-   const user = users.find(user => user.username === username && user.password === password)
+   let user = await UserModel.findOne({ email })
+
    if (user) {
-      // console.log(user.id)
-      req.session.userId = user.id
-      // console.log(req.session)
-      res.send(req.session)
+      res.send({ user: "exists" })
    } else {
-      res.send({ "not-sended1": "not-sended2" })
+      const hashedPassword = await bcrypt.hash(password, 12)
+      user = new UserModel({
+         username,
+         email,
+         password: hashedPassword
+      })
+      await user.save()
+      res.send({
+         user: "user created"
+      })
    }
+})
+
+app.post('/login', async (req, res) => {
+   const { email, password } = req.body
+   const user = await UserModel.findOne({ email })
+
+   if (!user) {
+      res.send({ user: "Not Finded" })
+   }
+
+   const isPasswordMatch = await bcrypt.compare(password, user.password)
+
+   if (!isPasswordMatch) {
+      res.send({ isMatch: isPasswordMatch, user: "Password Not Match" })
+   }
+
+   req.session.isAuth = true
+   res.send({ isMatch: isPasswordMatch, user: user, sessionId: req.session.id })
 })
 
 

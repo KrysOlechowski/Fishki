@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
 import styled from "styled-components/macro";
 
-import { login, checkSession } from "../../../utils";
+import { login } from "../../../utils";
 import { useMainContext } from "../../../utils";
 
 import { Input } from "../../atoms/input";
@@ -11,16 +11,18 @@ import "../../../theme/variables.scss";
 
 interface Props {}
 
-export const LoginForm: FC<Props> = () => {
-  const [username, setUserName] = useState("user");
-  const [password, setPassword] = useState("pass");
+const { bake_cookie } = require("sfcookies");
 
-  const { isTestMode } = useMainContext();
+export const LoginForm: FC<Props> = () => {
+  const [password, setPassword] = useState("pass");
+  const [email, setEmail] = useState("email");
+
+  const { isTestMode, checkSession } = useMainContext();
 
   const onInputChange = useCallback((e) => {
     const { value, name } = e.target;
-    if (name === "username") {
-      setUserName(value);
+    if (name === "emaill") {
+      setEmail(value);
     } else if (name === "password") {
       setPassword(value);
     }
@@ -30,31 +32,35 @@ export const LoginForm: FC<Props> = () => {
     (e) => {
       e.preventDefault();
       const loginValues = {
-        username: username,
+        email: email,
         password: password,
       };
       login(loginValues).then((res) => {
-        console.log(res);
+        if (!res.isMatch) {
+          console.log("Invalid Password");
+        } else {
+          bake_cookie("fishki", res.sessionId);
+          console.log("cookie created");
+          checkSession();
+        }
       });
     },
-    [username, password]
+    [email, password, checkSession]
   );
 
   const onSessionCheck = useCallback(() => {
-    checkSession().then((res) => {
-      console.log(res);
-    });
-  }, []);
+    checkSession();
+  }, [checkSession]);
 
   return (
     <Container>
       <Form onSubmit={onSubmit}>
         <Input
-          name="username"
-          value={username}
+          name="email"
+          value={email}
           onChange={onInputChange}
           type="text"
-          placeholder="User Name"
+          placeholder="Email"
         />
         <Input
           name="password"
