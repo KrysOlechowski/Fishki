@@ -93,13 +93,13 @@ app.post('/login', async (req, res) => {
    const user = await UserModel.findOne({ email })
 
    if (!user) {
-      res.send({ user: "Not Finded" })
+      return res.send({ user: "Not Finded" })
    }
 
    const isPasswordMatch = await bcrypt.compare(password, user.password)
 
    if (!isPasswordMatch) {
-      res.send({ isMatch: isPasswordMatch, user: "Password Not Match" })
+      return res.send({ isMatch: isPasswordMatch, user: "Password Not Match" })
    }
 
    req.session.isAuth = true
