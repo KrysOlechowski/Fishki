@@ -11,6 +11,11 @@ import "../../../theme/variables.scss";
 
 interface Props {}
 
+type Values = {
+  email: string;
+  password: string;
+};
+
 const { bake_cookie } = require("sfcookies");
 
 export const LoginForm: FC<Props> = () => {
@@ -21,7 +26,7 @@ export const LoginForm: FC<Props> = () => {
 
   const onInputChange = useCallback((e) => {
     const { value, name } = e.target;
-    if (name === "emaill") {
+    if (name === "email") {
       setEmail(value);
     } else if (name === "password") {
       setPassword(value);
@@ -29,12 +34,14 @@ export const LoginForm: FC<Props> = () => {
   }, []);
 
   const onSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      const loginValues = {
-        email: email,
-        password: password,
-      };
+    (e, loginGuestValues?: Values) => {
+      e && e.preventDefault();
+      const loginValues = loginGuestValues
+        ? loginGuestValues
+        : {
+            email: email,
+            password: password,
+          };
       login(loginValues).then((res) => {
         if (!res.isMatch) {
           console.log("Invalid Password");
@@ -48,12 +55,21 @@ export const LoginForm: FC<Props> = () => {
     [email, password, checkSession]
   );
 
+  const onLoginAsGuest = useCallback(() => {
+    const loginGuestValues = {
+      email: "guest",
+      password: "guest",
+    };
+    onSubmit(null, loginGuestValues);
+  }, [onSubmit]);
+
   const onSessionCheck = useCallback(() => {
     checkSession();
   }, [checkSession]);
 
   return (
     <Container>
+      <h1>Login:</h1>
       <Form onSubmit={onSubmit}>
         <Input
           name="email"
@@ -72,6 +88,10 @@ export const LoginForm: FC<Props> = () => {
         <Button className="login-form-button" type="submit">
           Login
         </Button>
+
+        <div className="login-form-guest" onClick={onLoginAsGuest}>
+          Or test as a guest
+        </div>
         {isTestMode && (
           <Button
             onClick={onSessionCheck}
@@ -86,12 +106,28 @@ export const LoginForm: FC<Props> = () => {
   );
 };
 
-const Form = styled.form``;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Container = styled.div`
-  border: 1px solid white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .login-form-button {
     max-width: 200px;
+  }
+
+  .login-form-guest {
+    color: #000;
+    text-decoration: underline;
+    margin-top: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;

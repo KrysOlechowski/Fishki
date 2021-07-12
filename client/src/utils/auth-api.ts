@@ -7,9 +7,12 @@ export const login = (payload: Login): Promise<any> => {
   return ky.post(`${API_URL}/login`, { json: payload }).json();
 };
 
-export const logout = (payload?: Login): Promise<any> => {
+export const logout = (cookieId: string): Promise<any> => {
   const API_URL = getApiUrl();
-  return ky.post(`${API_URL}/logout`, {}).json();
+  const payload = {
+    cookieId: cookieId,
+  };
+  return ky.post(`${API_URL}/logout`, { json: payload }).json();
 };
 
 export const checkSessionInMongo = (cookieId: string): Promise<any> => {

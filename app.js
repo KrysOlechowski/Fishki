@@ -107,17 +107,14 @@ app.post('/login', async (req, res) => {
 })
 
 
-app.post('/logout', (req, res) => {
-   console.log("logout")
-   console.log(req.session)
-   req.session.destroy((err) => {
-      if (err) {
-         console.log(err)
-         return res.send(err)
+app.post('/logout', async (req, res) => {
+   const { cookieId } = req.body
+   mongoose.connection.db.collection("sessions").deleteOne({ "_id": cookieId }).then(result => {
+      if (result.deletedCount > 0) {
+         return res.send({ cookieDeleted: true, cookieId: cookieId })
+      } else {
+         return res.send({ cookieDeleted: false, cookieId: cookieId })
       }
-      console.log(req.session)
-      res.clearCookie(SESS_NAME)
-      res.send({ "Session": "Destroyed" })
    })
 })
 

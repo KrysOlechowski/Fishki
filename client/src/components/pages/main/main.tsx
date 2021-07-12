@@ -12,12 +12,14 @@ import { Lesson } from "../../organisms/lesson";
 import { Button } from "../../atoms/button";
 import { LoginStatus } from "../../molecules/login-status";
 import { LoginForm } from "../../molecules/login-form";
-
+import { CheckingSession } from "../checking-session";
 import { useMainContext } from "../../../utils";
 import { logout } from "../../../utils";
 
+import { read_cookie, delete_cookie } from "sfcookies";
+
 import "../../../theme/variables.scss";
-import { CheckingSession } from "../checking-session";
+
 interface MainProps {}
 
 export const Main: FC<MainProps> = () => {
@@ -84,15 +86,17 @@ export const Main: FC<MainProps> = () => {
   }, []);
 
   const onLogoutClick = useCallback(() => {
-    logout().then((res) => {
-      console.log(res);
+    const cookieId = read_cookie("fishki");
+    logout(cookieId).then((res) => {
+      if (res.cookieDeleted) {
+        delete_cookie("fishki");
+      }
+      checkSession();
     });
   }, []);
 
-  console.log(isSessionChecking);
-
   return (
-    <MainWrapper>
+    <MainContainer>
       {loading && <CheckingSession />}
       <LoginStatus />
       {!isLoggedIn && <LoginForm />}
@@ -152,11 +156,11 @@ export const Main: FC<MainProps> = () => {
 
       {showCreateCollection && <CreateCollection />}
       {showStatistics && <Statistics />}
-    </MainWrapper>
+    </MainContainer>
   );
 };
 
-const MainWrapper = styled.div`
+const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--tundora);
