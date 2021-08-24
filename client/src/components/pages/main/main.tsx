@@ -34,8 +34,6 @@ export const Main: FC<MainProps> = () => {
     isLoggedIn,
     checkSession,
     isSessionChecking,
-  } = useMainContext();
-  const {
     isTestMode,
     setIsTestMode,
     isLessonMode,
@@ -133,7 +131,7 @@ export const Main: FC<MainProps> = () => {
             onClick={showStatisticsComponent}
             className="show-statistics-button"
           >
-            Create New Collection
+            Show Statistics
           </Button>
         </>
       )}

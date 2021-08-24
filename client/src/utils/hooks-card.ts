@@ -54,8 +54,10 @@ export const useEditCard = () => {
 
   const editAnswer = useCallback(
     (updatedFields: CardUpdate) => {
+      const currentAnswerTime = new Date().getTime();
+
       setIsLoading(true);
-      updateCard(updatedFields)
+      updateCard({ ...updatedFields, currentAnswerTime })
         .then((res) => {
           if (res.ok) {
             setIsComplete(true);

@@ -4,6 +4,9 @@ export interface Card extends CardCreate {
   updatedAt: string;
   goodAnswers: number;
   badAnswers: number;
+  lastAnswerTime: number;
+  currentAnswerTime: number;
+  timeBetweenAnswers: number;
 }
 
 export interface CardCreate {
@@ -21,6 +24,8 @@ export interface CardUpdate {
   goodAnswers?: number;
   badAnswers?: number;
   status?: CardStatus;
+  lastAnswerTime?: number;
+  currentAnswerTime?: number;
 }
 
 export enum CardStatus {

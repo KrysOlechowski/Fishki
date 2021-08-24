@@ -1,37 +1,51 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const cardSchema = new Schema({
-   front: {
+const cardSchema = new Schema(
+  {
+    front: {
       type: String,
-      required: true
-   },
-   back: {
+      required: true,
+    },
+    back: {
       type: String,
-      required: true
-   },
-   collectionName: {
+      required: true,
+    },
+    collectionName: {
       type: String,
-      required: true
-   },
-   status: {
+      required: true,
+    },
+    status: {
       type: String,
-      required: true
-   },
-   goodAnswers: {
+      required: true,
+    },
+    goodAnswers: {
       type: Number,
-      required: true
-   },
-   badAnswers: {
+      required: true,
+    },
+    badAnswers: {
       type: Number,
-      required: true
-   }
+      required: true,
+    },
+    lastAnswerTime: {
+      type: Number,
+      required: false,
+    },
+    currentAnswerTime: {
+      type: Number,
+      required: false,
+    },
+    timeBetweenAnswers: {
+      type: Number,
+      required: false,
+    },
+  },
+  { timestamps: true }
+);
 
+const cardCollection =
+  process.env.NODE_ENV === "development" ? "Carddev" : "Card";
 
-}, { timestamps: true });
+const Card = mongoose.model(cardCollection, cardSchema);
 
-const cardCollection = process.env.NODE_ENV === "development" ? "Carddev" : "Card"
-
-const Card = mongoose.model(cardCollection, cardSchema)
-
-module.exports = Card
+module.exports = Card;

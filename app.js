@@ -129,7 +129,7 @@ app.get("/cards", (req, res) => {
 
 app.post("/add", (req, res) => {
   const body = req.body;
-
+  const lastAnswerTime = new Date().getTime();
   const card = new Card({
     front: body.front,
     back: body.back,
@@ -137,6 +137,9 @@ app.post("/add", (req, res) => {
     collectionName: body.collectionName,
     goodAnswers: 0,
     badAnswers: 0,
+    lastAnswerTime: lastAnswerTime,
+    currentAnswerTime: 0,
+    timeBetweenAnswers: 0,
   });
   card
     .save()
@@ -157,10 +160,20 @@ app.delete("/delete", (req, res) => {
 
 app.post("/update", (req, res) => {
   const body = req.body;
+  const lastAnswerTime = body.lastAnswerTime;
+  const currentAnswerTime = body.currentAnswerTime;
+  console.log(lastAnswerTime);
+  console.log(currentAnswerTime);
+
+  const timeBetweenAnswers = currentAnswerTime - lastAnswerTime;
+
+  console.log(timeBetweenAnswers);
   Card.updateOne(
     { _id: body.id },
     {
       ...body,
+      lastAnswerTime: currentAnswerTime,
+      timeBetweenAnswers: timeBetweenAnswers,
     }
   )
     .then((result) => {
