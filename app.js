@@ -129,7 +129,7 @@ app.get("/cards", (req, res) => {
 
 app.post("/add", (req, res) => {
   const body = req.body;
-  const lastAnswerTime = new Date().getTime();
+  const currentAnswerTime = new Date().getTime();
   const card = new Card({
     front: body.front,
     back: body.back,
@@ -137,8 +137,8 @@ app.post("/add", (req, res) => {
     collectionName: body.collectionName,
     goodAnswers: 0,
     badAnswers: 0,
-    lastAnswerTime: lastAnswerTime,
-    currentAnswerTime: 0,
+    lastAnswerTime: 0,
+    currentAnswerTime: currentAnswerTime,
     timeBetweenAnswers: 0,
   });
   card
@@ -162,12 +162,9 @@ app.post("/update", (req, res) => {
   const body = req.body;
   const lastAnswerTime = body.lastAnswerTime;
   const currentAnswerTime = body.currentAnswerTime;
-  console.log(lastAnswerTime);
-  console.log(currentAnswerTime);
 
   const timeBetweenAnswers = currentAnswerTime - lastAnswerTime;
 
-  console.log(timeBetweenAnswers);
   Card.updateOne(
     { _id: body.id },
     {
@@ -188,7 +185,6 @@ app.post("/update", (req, res) => {
 
 app.post("/collections", (req, res) => {
   const collectionName = req.body.name;
-  console.log("collectionName : " + collectionName);
   CollectionsNames.findOne({ _id: "606b0dd9c718f4532491e229" }, (err, coll) => {
     coll.names = ["kol1", "kol2", "kol3"];
 

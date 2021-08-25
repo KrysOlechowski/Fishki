@@ -50,10 +50,14 @@ export const CardAnswers: FC<Props> = ({ card, showAnswer, onShowAnswer }) => {
           <span className="time-info">{lastTimeAnswer}</span> ago.
         </span>
         <span>
-          Previous answer was{" "}
-          <span className="status-info">
-            {card.status === "good" ? "good" : "wrong"}
-          </span>
+          {card.status !== "new" && (
+            <>
+              <span>Previous answer was </span>
+              <span className="status-info">
+                {card.status === "good" ? "good" : "wrong"}
+              </span>
+            </>
+          )}
         </span>
       </LastTimeAnswer>
     </Container>
