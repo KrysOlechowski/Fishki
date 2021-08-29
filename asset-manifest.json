@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/fishki/static/css/main.cad70a78.chunk.css",
-    "main.js": "/fishki/static/js/main.ef9b2ed9.chunk.js",
-    "main.js.map": "/fishki/static/js/main.ef9b2ed9.chunk.js.map",
+    "main.js": "/fishki/static/js/main.83990429.chunk.js",
+    "main.js.map": "/fishki/static/js/main.83990429.chunk.js.map",
     "runtime-main.js": "/fishki/static/js/runtime-main.5b295e5b.js",
     "runtime-main.js.map": "/fishki/static/js/runtime-main.5b295e5b.js.map",
     "static/js/2.654a574f.chunk.js": "/fishki/static/js/2.654a574f.chunk.js",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.5b295e5b.js",
     "static/js/2.654a574f.chunk.js",
     "static/css/main.cad70a78.chunk.css",
-    "static/js/main.ef9b2ed9.chunk.js"
+    "static/js/main.83990429.chunk.js"
   ]
 }
