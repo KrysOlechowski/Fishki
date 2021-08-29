@@ -73,6 +73,7 @@ const Card = styled.div`
   transition: transform 1s;
 
   .cardFace {
+    z-index: 1;
     position: absolute;
     width: 100%;
     height: 100%;
